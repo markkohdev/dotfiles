@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+# Custom bash aliases
+alias example='echo "Your alias"'

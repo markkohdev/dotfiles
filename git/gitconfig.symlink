@@ -1,0 +1,32 @@
+# Sample gitconfig
+#
+
+[hub]
+        protocol = https
+[user]
+        name = Mark Koh
+        email = mkoh@rjmetrics.com
+[credential]
+        helper = cache
+[alias]
+        co = checkout
+        promote = !#bash/bin/git-promote
+        wtf     = !#bash/bin/git-wtf
+        rank-contributors = !#bash/bin/git-rank-contributors
+        count   = !git shortlog -sn
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+[core]
+        excludesfile = ~/.gitignore
+        editor = vim
+[apply]
+        whitespace = nowarn
+[mergetool]
+        keepBackup = false
+[difftool]
+        prompt = false
+[help]
+        autocorrect = 1
