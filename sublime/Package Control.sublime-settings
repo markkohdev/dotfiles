@@ -1,0 +1,20 @@
+{
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"AngularJS (CoffeeScript)",
+		"Better CoffeeScript",
+		"Colorsublime",
+		"DocBlockr",
+		"Git",
+		"Git Conflict Resolver",
+		"Package Control",
+		"Sass",
+		"SublimeCodeIntel",
+		"SublimeLinter",
+		"SublimeLinter-php",
+		"TrailingSpaces"
+	]
+}
