@@ -4,17 +4,24 @@
 	],
 	"installed_packages":
 	[
+		"42 Headers",
 		"AngularJS (CoffeeScript)",
 		"Better CoffeeScript",
+		"BracketHighlighter",
 		"Colorsublime",
 		"DocBlockr",
+		"Enhanced Clojure",
 		"Git",
 		"Git Conflict Resolver",
+		"lispindent",
 		"Package Control",
+		"Pretty JSON",
+		"Restructured Text (RST) Snippets",
 		"Sass",
 		"SublimeCodeIntel",
 		"SublimeLinter",
 		"SublimeLinter-php",
+		"SublimeREPL",
 		"TrailingSpaces"
 	]
 }
