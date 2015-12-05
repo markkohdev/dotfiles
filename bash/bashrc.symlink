@@ -248,6 +248,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Run .pythonrc on python shell start
+export PYTHONSTARTUP=~/.pythonrc
+
 # silly aliases
 alias emacs='echo "Sorry, we use vim here.";'
 alias gedit='echo "Sorry, we use vim here.";'
+export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH

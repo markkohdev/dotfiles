@@ -5,7 +5,7 @@
         protocol = https
 [user]
         name = Mark Koh
-        email = mkoh@rjmetrics.com
+        email = markkohdev@gmail.com
 [credential]
         helper = cache
 [alias]
