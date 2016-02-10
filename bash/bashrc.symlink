@@ -254,4 +254,8 @@ export PYTHONSTARTUP=~/.pythonrc
 # silly aliases
 alias emacs='echo "Sorry, we use vim here.";'
 alias gedit='echo "Sorry, we use vim here.";'
-export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
+
+# Add things to PATH
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$PATH:$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin
+
