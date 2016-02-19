@@ -1,9 +1,4 @@
 #!/usr/bin/bash
 
 # Custom bash aliases
-alias example='echo "Your alias"'
-
-alias optcode='sshfs maadbox:/opt/code /home/mark/dev/code'
-alias maadbox='ssh maadbox'
-alias optcode2='sshfs jambox:/opt/code /home/mark/dev/code'
-alias jambox='ssh jambox'
+alias webserver='cd /opt/code/webserver/'
