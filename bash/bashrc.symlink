@@ -116,6 +116,7 @@ alias mv='mv -i'
 # Default to human readable figures
 alias df='df -h'
 alias du='du -h'
+alias sizeof='du -h'
 #
 # Misc :)
 # alias less='less -r'                          # raw control characters
@@ -236,6 +237,9 @@ if [ -f ~/.bash_custom ]; then
     . ~/.bash_custom
 fi
 
+if [ -f ~/.bash_additions]; then
+    . ~/.bash_additions
+fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -254,4 +258,8 @@ export PYTHONSTARTUP=~/.pythonrc
 alias emacs='echo "Sorry, we use vim here.";'
 alias gedit='echo "Sorry, we use vim here.";'
 export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
-. ~/.bash_additions
+
+# Add things to PATH
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$PATH:$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin
+
