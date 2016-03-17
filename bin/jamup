@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "***Starting Jambox**"
+cd $HOME/dev/jambox;
+vagrant up;
+echo "***Jambox Started**"
+
+echo "***Forwarding Jambox Filesystem***"
+sshfs jambox:/opt/code $HOME/dev/code;
+

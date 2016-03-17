@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "***Suspending Maadbox***"
+cd $HOME/dev/maadbox;
+vagrant suspend;
+echo "***Maadbox Suspended***"
+

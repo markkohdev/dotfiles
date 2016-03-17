@@ -257,5 +257,5 @@ alias gedit='echo "Sorry, we use vim here.";'
 
 # Add things to PATH
 export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=$PATH:$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin
+export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
 
