@@ -237,7 +237,7 @@ if [ -f ~/.bash_custom ]; then
     . ~/.bash_custom
 fi
 
-if [ -f ~/.bash_additions]; then
+if [ -f ~/.bash_additions ]; then
     . ~/.bash_additions
 fi
 # enable programmable completion features (you don't need to enable
