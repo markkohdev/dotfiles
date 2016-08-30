@@ -1,8 +1,15 @@
 #!/usr/bin/python
+"""
+ Take a nap, look like you're waiting for something to compile or something
+ put in ~/bin and add ~/bin to your PATH, make sure this file has execute perms (chmod +x nap)
+ Usage:
+   $ nap
+"""
 
 import random, re
 from time import sleep
 
+# Choose one of these long logs that looks like important stuff
 log_files = [
     '/var/log/system.log',
     '/var/log/install.log'
@@ -11,11 +18,16 @@ log_files = [
 while(True):
     log_file = random.choice(log_files)
     with open(log_file) as f:
+        # Read all the lines
         lines = f.readlines()
 
         for line in lines:
+            # If the line doesn't start with whitespace (i.e: It's not a continued line), then sleep
+            # for a random amount of time (50ms-1200ms)
             if not re.match(r'\s', line):
                 sleepytime = random.randint(50,1200)/1000.0
                 sleep(sleepytime)
+
+            # Print the line with trailing whitespace stripped (so we don't print buffered newlines)
             print line.rstrip()
 
