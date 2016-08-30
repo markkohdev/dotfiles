@@ -1,0 +1,16 @@
+#!/usr/bin/python
+
+import random
+from time import sleep
+
+log_file = '/var/log/system.log'
+
+while(True):
+    with open(log_file) as f:
+        lines = f.readlines()
+
+        for line in lines:
+            sleepytime = random.randint(50,1200)/1000.0
+            sleep(sleepytime)
+            print line.strip()
+
