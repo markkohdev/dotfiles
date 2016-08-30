@@ -1,16 +1,21 @@
 #!/usr/bin/python
 
-import random
+import random, re
 from time import sleep
 
-log_file = '/var/log/system.log'
+log_files = [
+    '/var/log/system.log',
+    '/var/log/install.log'
+    ]
 
 while(True):
+    log_file = random.choice(log_files)
     with open(log_file) as f:
         lines = f.readlines()
 
         for line in lines:
-            sleepytime = random.randint(50,1200)/1000.0
-            sleep(sleepytime)
-            print line.strip()
+            if not re.match(r'\s', line):
+                sleepytime = random.randint(50,1200)/1000.0
+                sleep(sleepytime)
+            print line.rstrip()
 
