@@ -49,6 +49,15 @@
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+
+# Git PS1 stuffs from Spotify
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=verbose # or auto to omit counts
+#export PS1='\h:\w$(__git_ps1 " (%s)")\$ '
+
+
 # Custom prompt settings
 export PS1="[\e[1;32m\u@\h-$SYSTEM_ENV\e[m \T \e[1;33m\w\e[m]\n $ "
 
@@ -257,6 +266,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
    . $(brew --prefix)/etc/bash_completion
 fi
 
+
 # Run .pythonrc on python shell start
 export PYTHONSTARTUP=~/.pythonrc
 
@@ -267,4 +277,7 @@ alias gedit='echo "Sorry, we use vim here.";'
 # Add things to PATH
 export PATH=$PATH:$HOME/dotfiles/bin
 export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
+
+export NVM_DIR="/Users/markkoh/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
