@@ -21,6 +21,8 @@ if [ "$1" != "" ]; then
         # Use sips (mac)
         sips -Z 128 --out "$resized" "$1"
     else
-        echo "I'm sorry, your operating system doesn't support this tool."
+        echo "I'm sorry, your system does not (yet) support this tool."
+        echo "Ubuntu:"
+        echo "  $ sudo apt-get install -y imagemagick"
     fi
 fi

@@ -1,0 +1,65 @@
+#!/usr/bin/python
+"""
+ Take a nap, look like you're waiting for something to compile or something
+ put in ~/bin and add ~/bin to your PATH, make sure this file has execute perms (chmod +x nap)
+ Usage:
+   $ nap
+"""
+
+import random, re
+from time import sleep
+
+# Choose one of these long logs that looks like important stuff
+log_files = [
+    '/var/log/system.log',
+    '/var/log/install.log'
+    ]
+
+# Pretty colors to print
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+   
+    # Skew these probabilities
+    COLORSET = [OKGREEN, OKGREEN, FAIL, BOLD, BOLD]
+
+coloring = None
+
+while(True):
+    log_file = random.choice(log_files)
+    with open(log_file) as f:
+        # Read all the lines
+        lines = f.readlines()
+
+        for line in lines:
+            # If the line doesn't start with whitespace (i.e: It's not a continued line), then sleep
+            # for a random amount of time (50ms-1200ms)
+            continued_line = re.match(r'\s', line)
+            if not continued_line:
+                sleepytime = random.randint(50,1200)/1000.0
+                sleep(sleepytime)
+            
+            # Get the line with trailing whitespace stripped (so we don't print buffered newlines)
+            output = line.rstrip()
+
+            # Should we make this output colorful?            
+            should_color = random.random()
+            # Only assing coloring if this isn't a continued line
+            if not continued_line and should_color < 0.3:
+                coloring = random.choice(bcolors.COLORSET)
+            elif not continued_line:
+                # This isn't a continued line and we chose not to color
+                coloring = None
+            
+            # If we have coloring, make it pretty
+            if coloring:
+                output = "{}{}{}".format(coloring, output, bcolors.ENDC)
+
+            print output
+
