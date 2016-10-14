@@ -1,4 +1,4 @@
-# holman does dotfiles
+# ~~holman~~ mark does dotfiles
 
 ## dotfiles
 
