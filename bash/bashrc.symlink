@@ -262,8 +262,10 @@ fi
 
 
 # Also enable mac bash completion for git because it sucks by default
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-   . $(brew --prefix)/etc/bash_completion
+if [ ! -z $(which brew) ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+       . $(brew --prefix)/etc/bash_completion
+    fi
 fi
 
 
