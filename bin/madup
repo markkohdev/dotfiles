@@ -4,5 +4,5 @@ echo "***Starting Maadbox**"
 cd $HOME/dev/maadbox;
 vagrant up;
 
-echo "***Forwarding Maadbox Filesystem***"
-sshfs maadbox:/opt/code $HOME/dev/code;
+#echo "***Forwarding Maadbox Filesystem***"
+#sshfs maadbox:/opt/code $HOME/dev/code;
