@@ -1,9 +1,10 @@
-# To the extent possible under law, the author(s) have dedicated all 
-# copyright and related and neighboring rights to this software to the 
-# public domain worldwide. This software is distributed without any warranty. 
-# You should have received a copy of the CC0 Public Domain Dedication along 
-# with this software. 
-# If not, see <http://creativecommons.org/publicdomain/zero/1.0/>. 
+#!/usr/bin/bash
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the
+# public domain worldwide. This software is distributed without any warranty.
+# You should have received a copy of the CC0 Public Domain Dedication along
+# with this software.
+# If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
 # base-files version 4.1-1
 
@@ -49,27 +50,6 @@
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
-# Git PS1 stuffs from Spotify
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWUPSTREAM=verbose # or auto to omit counts
-#export PS1='\h:\w$(__git_ps1 " (%s)")\$ '
-
-
-# Custom prompt settings
-export PS1="[\e[1;32m\u@\h-$SYSTEM_ENV\e[m \t \e[1;33m\w\e[m]\n $ "
-
-# Change the window title of X terminals
-case ${TERM} in
-        xterm*|rxvt*|Eterm|aterm|kterm|gnome)
-                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-                ;;
-        screen)
-                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-                ;;
-esac
 
 
 
@@ -148,90 +128,6 @@ mkgo() { # mkdir and cd combined into one command
   mkdir $1 && cd $1
 }
 
-
-# Umask
-#
-# /etc/profile sets 022, removing write perms to group + others.
-# Set a more restrictive umask: i.e. no exec perms for others:
-# umask 027
-# Paranoid: neither group nor others have any perms:
-# umask 077
-
-# Functions
-#
-# Some people use a different file for functions
-# if [ -f "${HOME}/.bash_functions" ]; then
-#   source "${HOME}/.bash_functions"
-# fi
-#
-# Some example functions:
-#
-# a) function settitle
-# settitle () 
-# { 
-#   echo -ne "\e]2;$@\a\e]1;$@\a"; 
-# }
-# 
-# b) function cd_func
-# This function defines a 'cd' replacement function capable of keeping, 
-# displaying and accessing history of visited directories, up to 10 entries.
-# To use it, uncomment it, source this file and try 'cd --'.
-# acd_func 1.0.5, 10-nov-2004
-# Petar Marinov, http:/geocities.com/h2428, this is public domain
-# cd_func ()
-# {
-#   local x2 the_new_dir adir index
-#   local -i cnt
-# 
-#   if [[ $1 ==  "--" ]]; then
-#     dirs -v
-#     return 0
-#   fi
-# 
-#   the_new_dir=$1
-#   [[ -z $1 ]] && the_new_dir=$HOME
-# 
-#   if [[ ${the_new_dir:0:1} == '-' ]]; then
-#     #
-#     # Extract dir N from dirs
-#     index=${the_new_dir:1}
-#     [[ -z $index ]] && index=1
-#     adir=$(dirs +$index)
-#     [[ -z $adir ]] && return 1
-#     the_new_dir=$adir
-#   fi
-# 
-#   #
-#   # '~' has to be substituted by ${HOME}
-#   [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
-# 
-#   #
-#   # Now change to the new dir and add to the top of the stack
-#   pushd "${the_new_dir}" > /dev/null
-#   [[ $? -ne 0 ]] && return 1
-#   the_new_dir=$(pwd)
-# 
-#   #
-#   # Trim down everything beyond 11th entry
-#   popd -n +11 2>/dev/null 1>/dev/null
-# 
-#   #
-#   # Remove any other occurence of this dir, skipping the top of the stack
-#   for ((cnt=1; cnt <= 10; cnt++)); do
-#     x2=$(dirs +${cnt} 2>/dev/null)
-#     [[ $? -ne 0 ]] && return 0
-#     [[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
-#     if [[ "${x2}" == "${the_new_dir}" ]]; then
-#       popd -n +$cnt 2>/dev/null 1>/dev/null
-#       cnt=cnt-1
-#     fi
-#   done
-# 
-#   return 0
-# }
-# 
-# alias cd=cd_func
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -249,6 +145,7 @@ fi
 if [ -f ~/.bash_additions ]; then
     . ~/.bash_additions
 fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -268,6 +165,63 @@ if [ ! -z $(which brew) ]; then
     fi
 fi
 
+# Add things to PATH
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
+
+# Some PS1 Colors
+COLOR_RED="\033[0;31m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_GREEN="\033[0;32m"
+COLOR_OCHRE="\033[38;5;95m"
+COLOR_BLUE="\033[0;34m"
+COLOR_WHITE="\033[0;37m"
+COLOR_RESET="\033[0m"
+
+# Get the appropriate color for the git branch
+function git_color {
+  local git_status="$(git status 2> /dev/null)"
+
+  if [[ ! $git_status =~ "working directory clean" ]]; then
+    echo -e $COLOR_RED
+  elif [[ $git_status =~ "Your branch is ahead of" ]]; then
+    echo -e $COLOR_YELLOW
+  elif [[ $git_status =~ "nothing to commit" ]]; then
+    echo -e $COLOR_GREEN
+  else
+    echo -e $COLOR_OCHRE
+  fi
+}
+
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+###########
+
+# Custom prompt settings
+PS1="["  # Open square bracket
+PS1+="\e[1;32m"  # GREEN
+PS1+="\u@\h-$SYSTEM_ENV "  # user@hostname
+PS1+="\e[m"  # WHITE
+PS1+="\t "  # Time (padded)
+PS1+="\e[1;33m"  # Yellow
+PS1+="\w "  # Working dir (padded)
+PS1+="\$(git_color)"  # Blue
+PS1+="\$(parse_git_branch)"  # git branch (evaluated at expansion)
+PS1+="\e[m"  # WHITE
+PS1+="]\n $ "  # Close brachet, newline, prompt
+export PS1
+
+# Change the window title of X terminals
+case ${TERM} in
+        xterm*|rxvt*|Eterm|aterm|kterm|gnome)
+                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+                ;;
+        screen)
+                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+                ;;
+esac
 
 # Run .pythonrc on python shell start
 export PYTHONSTARTUP=~/.pythonrc
@@ -275,10 +229,6 @@ export PYTHONSTARTUP=~/.pythonrc
 # silly aliases
 alias emacs='echo "Sorry, we use vim here.";'
 alias gedit='echo "Sorry, we use vim here.";'
-
-# Add things to PATH
-export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
 
 export NVM_DIR="/Users/markkoh/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
