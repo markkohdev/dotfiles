@@ -42,7 +42,7 @@ while(True):
             # for a random amount of time (50ms-1200ms)
             continued_line = re.match(r'\s', line)
             if not continued_line:
-                sleepytime = random.randint(50,1200)/1000.0
+                sleepytime = random.randint(5,1200)/1000.0
                 sleep(sleepytime)
             
             # Get the line with trailing whitespace stripped (so we don't print buffered newlines)
