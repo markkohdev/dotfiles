@@ -656,7 +656,7 @@
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/iterm</string>
+	<string>~/dotfiles/iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -695,7 +695,9 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>26 261 697 509 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>69 286 796 473 0 0 1440 878 </string>
+	<string>95 385 796 473 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 0</key>
+	<string>2 575 570 452 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>590 283 850 452 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -2016,7 +2018,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/markkoh/iterm</string>
+	<string>/Users/markkoh/dotfiles/iterm</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
