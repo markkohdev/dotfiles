@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -695,9 +697,9 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>26 261 697 509 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>95 385 796 473 0 0 1680 1028 </string>
+	<string>69 312 796 473 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 575 570 452 0 0 1680 1028 </string>
+	<string>49 1 1389 877 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>590 283 850 452 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -2028,7 +2030,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-12T03:33:54Z</date>
+	<date>2017-04-16T23:48:03Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
