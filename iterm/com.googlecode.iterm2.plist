@@ -869,12 +869,16 @@
 			<true/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.10980392247438431</real>
+				<real>0.046329844743013382</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.10980392247438431</real>
+				<real>0.046329066157341003</real>
 				<key>Red Component</key>
-				<real>0.10980392247438431</real>
+				<real>0.046330444514751434</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -1329,7 +1333,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.11707655325443787</real>
+			<real>0.10480306952662721</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -2033,8 +2037,10 @@
 	<date>2017-04-16T23:48:03Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SmartPlacement</key>
+	<true/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.30502804487179497</real>
+	<real>0.1257161458333334</real>
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabViewType</key>
