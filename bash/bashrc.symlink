@@ -116,7 +116,7 @@ alias fgrep='fgrep --color=auto'              # show differences in colour
 #
 # Some shortcuts for different directory listings
 # alias ls='ls -hF --color=tty'                 # classify files in colour
-alias ls='ls -FHG'
+alias ls='ls -FHG --color=auto'
 # alias dir='ls --color=auto --format=vertical'
 # alias vdir='ls --color=auto --format=long'
 # alias ll='ls -l'                              # long list
@@ -234,5 +234,8 @@ export NVM_DIR="/Users/markkoh/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Activate autoenv
-source /usr/local/bin/activate.sh
-cd .
+if [ -f /usr/local/bin/activate.sh ]; then
+    source /usr/local/bin/activate.sh
+    cd .
+fi
+
