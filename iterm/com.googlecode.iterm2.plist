@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -695,9 +697,9 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>26 261 697 509 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>284 801 796 473 0 0 3440 1418 </string>
+	<string>569 722 937 465 0 0 3440 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 575 570 452 0 0 1680 1028 </string>
+	<string>2 54 1676 966 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>590 283 850 452 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -1986,6 +1988,8 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>B7513B09-1671-4BD3-9375-DA5BAD0E8717</string>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>513660833.589176</real>
 	<key>PointerActions</key>
@@ -2032,8 +2036,10 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-13T21:16:15Z</date>
+	<date>2017-05-23T19:22:46Z</date>
 	<key>SUSendProfileInfo</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>SmartPlacement</key>
 	<true/>
