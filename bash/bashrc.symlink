@@ -157,9 +157,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Assume we're on linux unless we have brew installed (below)
+LINUX=true
 
 # Also enable mac bash completion for git because it sucks by default
 if [ ! -z $(which brew) ]; then
+    # We're on mac!
+    LINUX=false
+
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
        . $(brew --prefix)/etc/bash_completion
     fi
@@ -181,8 +186,10 @@ COLOR_RESET="\033[0m"
 # Get the appropriate color for the git branch
 function git_color {
   local git_status="$(git status 2> /dev/null)"
+  # Unclean tree says "directory" on unix but "tree" on mac
+  [[ $LINUX ]] && local tree_jawn="directory" || local tree_jawn="tree"
 
-  if [[ ! "$git_status" =~ "working tree clean" ]]; then
+  if [[ ! "$git_status" =~ "working $tree_jawn clean" ]]; then
     echo -e $COLOR_RED
   elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
     echo -e $COLOR_YELLOW
