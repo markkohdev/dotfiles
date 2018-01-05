@@ -1,0 +1,7 @@
+#!/bin/bash
+# Remove quotes from strings!
+# Example:
+#  $ echo '"Banana"\n"Apple"' | remove-quotes
+#    Banana
+#    Apple
+sed -e 's/^"//' -e 's/"$//'
