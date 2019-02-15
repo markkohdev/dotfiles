@@ -10,6 +10,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>AdventureTime</key>
@@ -660,9 +662,13 @@
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/dotfiles/iterm</string>
+	<string>~/tmp</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedStateForSaveMode</key>
+	<true/>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -696,8 +702,10 @@
 	<true/>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>911 257 445 103 0 0 1440 878 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>700 689 400 129 0 0 1920 1058 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>650 511 620 392 0 0 1920 1058 </string>
+	<string>1410 780 620 392 0 0 3440 1418 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>26 261 697 509 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
@@ -705,7 +713,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>505 774 592 584 0 0 3440 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 450 1662 968 0 0 3440 1418 </string>
+	<string>0 576 850 452 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>590 283 850 452 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -2042,11 +2050,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-21T18:31:16Z</date>
+	<date>2018-10-19T14:51:07Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
@@ -2068,7 +2076,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.1</string>
+	<string>3.1.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
