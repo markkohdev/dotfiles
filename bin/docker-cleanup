@@ -1,0 +1,3 @@
+# Cleanup old docker images
+docker system prune
+

@@ -125,6 +125,19 @@ link_file () {
   fi
 }
 
+create_templates () {
+  info 'creating files'
+
+  if [ ! -f ~/.bash_custom ]; then
+      cat << EOF >> ~/.bash_custom
+#!/usr/bin/env bash
+
+# Machine-specific bash commands here
+
+EOF
+  fi
+}
+
 install_dotfiles () {
   info 'installing dotfiles'
 
@@ -138,6 +151,7 @@ install_dotfiles () {
 }
 
 setup_gitconfig
+create_templates
 install_dotfiles
 source ~/.bashrc
 
