@@ -79,6 +79,7 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups:erasedups
 shopt -s histappend
 
 # After each command, append to the history file and reread it
+# (Basically "share history between tabs, windows, etc")
 export PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}"history -a; history -c; history -r"
 
 # Ignore some controlling instructions
