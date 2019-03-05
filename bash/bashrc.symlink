@@ -247,24 +247,20 @@ alias gedit='echo "Sorry, we use vim here.";'
 export NVM_DIR="/Users/markkoh/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Activate autoenv
-#if [ -f /usr/local/bin/activate.sh ]; then
-#    source /usr/local/bin/activate.sh
-#    cd .
-#fi
 
 # Virtualenv wrapper exports
 export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+source `which virtualenvwrapper.sh`
 
 if [ -x /usr/local/bin/pyenv ]; then
     eval "$(pyenv init -)"
-fi
 
-# Virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-source /usr/local/bin/virtualenvwrapper.sh
+    
+# Activate autoenv
+if [ -f /usr/local/bin/activate.sh ]; then
+    source `which activate.sh`
+    cd .
+fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
