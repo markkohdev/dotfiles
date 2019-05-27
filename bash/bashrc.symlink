@@ -254,6 +254,7 @@ source `which virtualenvwrapper.sh`
 
 if [ -x /usr/local/bin/pyenv ]; then
     eval "$(pyenv init -)"
+fi
 
     
 # Activate autoenv
