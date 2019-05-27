@@ -1,0 +1,25 @@
+# Mostly taken from https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
+
+# remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+
+# Enable mouse control (clickable windows, panes, resizable panes)
+set-option -g mouse on
+#set-option -s set-clipboard off
+#bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -se c -i"
+
+# Sane scrolling
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+
+# reload config file (change file location to your the tmux.conf you want to use)
+bind r source-file ~/.tmux.conf
+

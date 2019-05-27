@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# TODO: Figure out if mac or linux and use the correct path
+
+/Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text $1 & disown
+

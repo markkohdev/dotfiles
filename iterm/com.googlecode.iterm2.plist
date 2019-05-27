@@ -684,7 +684,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAc7Gdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKGdsi0OVtIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -703,17 +703,17 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>911 257 445 103 0 0 1440 878 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>700 689 400 129 0 0 1920 1058 </string>
+	<string>1520 976 400 129 0 0 3440 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>1410 780 620 392 0 0 3440 1418 </string>
+	<string>1370 606 700 622 0 0 3440 1417 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>26 261 697 509 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>242 496 770 429 0 0 1920 1058 </string>
+	<string>569 802 796 486 0 0 3440 1417 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>505 774 592 584 0 0 3440 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 576 850 452 0 0 1680 1028 </string>
+	<string>0 65 1680 962 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>590 283 850 452 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
@@ -1998,6 +1998,8 @@
 			<string>/Users/markkoh</string>
 		</dict>
 	</array>
+	<key>NoSyncHaveRequestedFullDiskAccess</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
@@ -2050,11 +2052,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-10-19T14:51:07Z</date>
+	<date>2019-03-11T19:01:40Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
@@ -2076,7 +2078,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.7</string>
+	<string>3.2.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
