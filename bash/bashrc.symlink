@@ -175,6 +175,19 @@ export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/dotfiles/bin
 export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin/python:$PATH
 
+array_contains () { 
+    local array="$1[@]"
+    local seeking=$2
+    local in=1
+    for element in "${!array}"; do
+        if [[ $element == $seeking ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
 # Some PS1 Colors
 COLOR_RED="\033[0;31m"
 COLOR_YELLOW="\033[0;33m"
@@ -184,21 +197,28 @@ COLOR_BLUE="\033[0;34m"
 COLOR_WHITE="\033[0;37m"
 COLOR_RESET="\033[0m"
 
+DONT_GIT_COLOR=("/Users/markkoh/spotify/android_client")
+
 # Get the appropriate color for the git branch
 function git_color {
-  local git_status="$(git status --ignore-submodules 2> /dev/null)"
-  # Unclean tree says "directory" on unix but "tree" on mac
-  [[ $LINUX ]] && local tree_jawn="directory" || local tree_jawn="tree"
+	# Don't run this for large git repos (specified in the array above)
+	if array_contains DONT_GIT_COLOR $(pwd); then
+		echo -e $COLOR_OCHRE
+	else   
+		local git_status="$(git status --ignore-submodules 2> /dev/null)"
+		# Unclean tree says "directory" on unix but "tree" on mac
+		[[ $LINUX ]] && local tree_jawn="directory" || local tree_jawn="tree"
 
-  if [[ ! "$git_status" =~ "working $tree_jawn clean" ]]; then
-    echo -e $COLOR_RED
-  elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
-    echo -e $COLOR_YELLOW
-  elif [[ "$git_status" =~ "nothing to commit" ]]; then
-    echo -e $COLOR_GREEN
-  else
-    echo -e $COLOR_OCHRE
-  fi
+		if [[ ! "$git_status" =~ "working $tree_jawn clean" ]]; then
+			echo -e $COLOR_RED
+		elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
+			echo -e $COLOR_YELLOW
+		elif [[ "$git_status" =~ "nothing to commit" ]]; then
+			echo -e $COLOR_GREEN
+		else
+			echo -e $COLOR_OCHRE
+		fi
+	fi
 }
 
 function parse_git_branch {
