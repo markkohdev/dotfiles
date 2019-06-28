@@ -173,7 +173,8 @@ fi
 # Add things to PATH
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin/python:$PATH
+export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+export PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin:$PATH
 
 array_contains () { 
     local array="$1[@]"
