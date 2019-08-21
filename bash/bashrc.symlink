@@ -271,7 +271,8 @@ export NVM_DIR="/Users/markkoh/.nvm"
 
 # Virtualenv wrapper exports
 export WORKON_HOME=$HOME/.virtualenvs
-source `which virtualenvwrapper.sh`
+# Source the file directly in your global install because pyenv overwrites virtualenvwrapper in your path with its own gross version
+source /usr/local/bin/virtualenvwrapper.sh
 
 if [ -x /usr/local/bin/pyenv ]; then
     eval "$(pyenv init -)"

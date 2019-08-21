@@ -17,4 +17,5 @@ alias hibernate='sudo pm-hibernate'
 alias master='git checkout master'
 alias development='git checkout development'
 
+alias please='sudo'
 
