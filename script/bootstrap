@@ -28,7 +28,7 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/gitconfig.symlink ]
+  if ! [ -f symlinks/gitconfig.symlink ]
   then
     info 'setup gitconfig'
 
@@ -43,7 +43,7 @@ setup_gitconfig () {
     user ' - What is your github author email?'
     read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" symlinks/gitconfig.symlink.example > symlinks/gitconfig.symlink
 
     success 'gitconfig'
   fi
@@ -138,6 +138,12 @@ EOF
   fi
 }
 
+# TODO: Finish this
+# setup_zsh () {
+#   # Clone the
+#   git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# }
+
 install_dotfiles () {
   info 'installing dotfiles'
 
@@ -150,9 +156,14 @@ install_dotfiles () {
   done
 }
 
+# run_installers () {
+#   source install
+# }
+
 setup_gitconfig
 create_templates
 install_dotfiles
+# run_installers
 source ~/.bashrc
 
 echo ''

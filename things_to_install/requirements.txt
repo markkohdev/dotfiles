@@ -1,0 +1,7 @@
+# This is a global python requirements file that can be used to
+# install system-level binaries.
+
+tldr
+
+# ZSH things
+powerline-status

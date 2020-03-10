@@ -5,7 +5,7 @@
         protocol = https
 [user]
         name = Mark Koh
-        email = markkohdev@gmail.com
+        email = markkoh@spotify.com
 [credential]
         helper = cache
 [alias]
@@ -31,7 +31,7 @@
 [help]
         autocorrect = 1
 [push]
-        default=current
+        default = current
 
 [pull]
         default=current

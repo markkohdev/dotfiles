@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+mkvirtualenv -p python3 ${PWD##*/}
+

@@ -1,0 +1,151 @@
+# Executed by all shells
+# All code should be sh-compliant
+
+###############################################################################
+# Basic Shell Setup
+###############################################################################
+# If not running interactively, don't do anything
+[[ "$-" != *i* ]] && return
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+###############################################################################
+# Universal Aliases
+###############################################################################
+#
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+#
+# Interactive operation...
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+#
+# Default to human readable figures
+alias df='df -h'
+alias du='du -h'
+alias sizeof='du -h'
+#
+# Misc :)
+# alias less='less -r'                          # raw control characters
+# alias whence='type -a'                        # where, of a sort
+alias grep='grep --color'                     # show differences in colour
+alias egrep='egrep --color=auto'              # show differences in colour
+alias fgrep='fgrep --color=auto'              # show differences in colour
+#
+# Some shortcuts for different directory listings
+# alias ls='ls -hF --color=tty'                 # classify files in colour
+alias ls='ls -FHG'
+# alias dir='ls --color=auto --format=vertical'
+# alias vdir='ls --color=auto --format=long'
+# alias ll='ls -l'                              # long list
+alias la='ls -A'                              # all but . and ..
+# alias l='ls -CF'                              #
+
+# silly aliases
+alias emacs='echo "Sorry, we use vim here.";'
+alias gedit='echo "Sorry, we use vim here.";'
+
+
+###############################################################################
+# PATH modifications
+###############################################################################
+export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+export PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin:$PATH
+
+
+###############################################################################
+# External (to this file) Configs
+###############################################################################
+if [ -f ${HOME}/.bash_aliases ]; then
+    source ${HOME}/.bash_aliases
+fi
+
+if [ -f ${HOME}/.bash_custom ]; then
+    . ${HOME}/.bash_custom
+fi
+
+if [ -f ${HOME}/.bash_additions ]; then
+    . ${HOME}/.bash_additions
+fi
+
+
+###############################################################################
+# History
+###############################################################################
+# Make our history really big.  Don't forget things basically.
+export HISTSIZE=1000000
+export HISTFILESIZE=100000
+export SAVEHIST=$HISTSIZE
+
+# Ignore some controlling instructions
+# HISTIGNORE is a colon-delimited list of patterns which should be excluded.
+# The '&' is a special pattern which suppresses duplicate entries.
+# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit'
+# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls' # Ignore the ls command as well
+
+
+###############################################################################
+# Convenience Functions
+###############################################################################
+# mkdir and cd combined into one command
+mkgo() {
+  mkdir $1 && cd $1
+}
+
+# Check if an array contains an item
+# usage: array_contains ("a" "b" "c") "c"
+array_contains () {
+    local array="$1[@]"
+    local seeking=$2
+    local in=1
+    for element in "${!array}"; do
+        if [[ $element == $seeking ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
+}
+
+# Usage: compresspdf [input file] [output file] [screen*|ebook|printer|prepress]
+# Note: If this doesn't work, `brew install ghostscript`
+compresspdf() {
+    gs -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/${3:-"screen"} -dCompatibilityLevel=1.4 -sOutputFile="$2" "$1"
+}
+
+
+###############################################################################
+# Generic Programming Configs
+###############################################################################
+# Node version mananger
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Run .pythonrc on python shell start
+export PYTHONSTARTUP=${HOME}/.pythonrc
+
+# Virtualenv wrapper exports
+export WORKON_HOME=$HOME/.virtualenvs
+# Source the file directly in your global install because pyenv overwrites virtualenvwrapper in your path with its own gross version
+source /usr/local/bin/virtualenvwrapper.sh
+
+if [ -x /usr/local/bin/pyenv ]; then
+    eval "$(pyenv init -)"
+fi
+
+# TODO: Replace this with direnv in the future?
+# Activate autoenv
+if [ -f /usr/local/bin/activate.sh ]; then
+    source `which activate.sh`
+    cd .
+fi
