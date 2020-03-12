@@ -9,8 +9,23 @@ tap 'sambadevi/powerlevel9k'
 ###############################################################################
 # Binaries
 ###############################################################################
-
-# zsh
+# Shell stuff
+brew 'zsh'
 brew 'powerlevel9k'
 brew 'antigen'
 brew 'fzf'
+brew 'gnu-sed'
+brew 'htop'
+brew 'jq'
+brew 'rsync'
+brew 'readline'
+brew 'tmux'
+brew 'tree'
+brew 'watch'
+brew 'wget'
+
+# Dev things
+brew 'imagemagick'
+brew 'cookiecutter'
+brew 'jenv'
+brew 'pyenv'

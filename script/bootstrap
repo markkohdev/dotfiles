@@ -5,6 +5,14 @@
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd)
 
+# Determine what machine we're on
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine="Linux";;
+    Darwin*)    machine="Mac";;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
 set -e
 
 echo ''
@@ -138,12 +146,6 @@ EOF
   fi
 }
 
-# TODO: Finish this
-# setup_zsh () {
-#   # Clone the
-#   git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-# }
-
 install_dotfiles () {
   info 'installing dotfiles'
 
@@ -156,15 +158,28 @@ install_dotfiles () {
   done
 }
 
-# run_installers () {
-#   source install
-# }
+run_installers () {
+  source $DOTFILES_ROOT/script/install
+}
+
+install_fonts () {
+  MAC_FONTS_ROOT=/Library/Fonts
+
+  # Copy all the fonts
+  for f in $DOTFILES_ROOT/fonts/*.ttf; do
+    fname=$(basename $f)
+    if [[ "$machine" == "Mac" ]] && [[ ! -f "$MAC_FONTS_ROOT/$fname" ]]; then
+      cp "$f" "$MAC_FONTS_ROOT"
+    fi
+  done
+}
 
 setup_gitconfig
 create_templates
 install_dotfiles
-# run_installers
-source ~/.bashrc
+run_installers
+install_fonts
 
 echo ''
 echo '  All installed!'
+echo '  You may need to restart your terminal for the changes to take effect.'

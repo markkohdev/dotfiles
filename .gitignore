@@ -5,6 +5,7 @@ atom.symlink/packages
 atom.symlink/storage
 atom.symlink/themes
 
-git/gitconfig.symlink
+symlinks/gitconfig.symlink
+things_to_install/Brewfile.lock.json
 
 bash/bash_custom.symlink
