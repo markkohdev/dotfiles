@@ -1,4 +1,6 @@
 #!/bin/zsh
+# Mark's custom zsh config
+# Executed at zsh startup
 
 ###############################################################################
 # Common Loader

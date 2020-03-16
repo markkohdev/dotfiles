@@ -8,4 +8,6 @@ atom.symlink/themes
 symlinks/gitconfig.symlink
 things_to_install/Brewfile.lock.json
 
-bash/bash_custom.symlink
+symlinks/bash_custom.symlink
+
+iterm/iTerm2-Color-Schemes

@@ -10,6 +10,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 # Install brew dependencies
 if [ ! -z $(which brew) ]; then
+  brew update
   brew bundle --file $SCRIPT_DIR/Brewfile
 else
   echo "Brew installation not found.  Skipping Brewfile installation."
@@ -20,7 +21,7 @@ fi
 
 # Install pip dependencies
 if [ ! -z $(which pip) ]; then
-  pip install -r $SCRIPT_DIR/requirements.txt
+  pip install -r "$SCRIPT_DIR/requirements.txt"
 else
   echo "Pip installation not found.  Skipping pip installation."
 fi
