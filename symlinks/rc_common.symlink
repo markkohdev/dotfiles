@@ -136,12 +136,21 @@ export PYTHONSTARTUP=${HOME}/.pythonrc
 
 # Virtualenv wrapper exports
 export WORKON_HOME=$HOME/.virtualenvs
-# Source the file directly in your global install because pyenv overwrites virtualenvwrapper in your path with its own gross version
-source /usr/local/bin/virtualenvwrapper.sh
 
+# Init pyenv
 if [ -x /usr/local/bin/pyenv ]; then
     eval "$(pyenv init -)"
+    pyenv virtualenvwrapper
 fi
+
+# Setup pyenv env vars (otherwise we get weird errors as per https://github.com/pyenv/pyenv/wiki/common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib)
+# export CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install -v 2.7.7
+export CFLAGS="-I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+export LDFLAGS="-L$(brew --prefix openssl)/lib"
+
+
+# Activate autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # TODO: Replace this with direnv in the future?
 # Activate autoenv

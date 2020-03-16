@@ -23,9 +23,12 @@ brew 'tmux'
 brew 'tree'
 brew 'watch'
 brew 'wget'
+brew 'autojump'
 
 # Dev things
 brew 'imagemagick'
 brew 'cookiecutter'
 brew 'jenv'
 brew 'pyenv'
+brew 'pyenv-virtualenv'
+brew 'pyenv-virtualenvwrapper'
