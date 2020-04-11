@@ -141,6 +141,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 if [ -x /usr/local/bin/pyenv ]; then
     eval "$(pyenv init -)"
     pyenv virtualenvwrapper
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
 fi
 
 # Setup pyenv env vars (otherwise we get weird errors as per https://github.com/pyenv/pyenv/wiki/common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib)
