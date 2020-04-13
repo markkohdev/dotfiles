@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Download a song from youtube!
+# Usage:
+#   download-song "<YOUTUBE_LINK>" <DESIRED_NAME>
+
+YOUTUBE=$1
+NAME="${2:-${PWD##*/}}"
+
+if [ -z $YOUTUBE ]; then
+    echo "Usage: download-song \"https://www.youtube.com/watch?v=qWl91MnaIpM\" song_name"
+    exit 1
+fi
+
+CMD="youtube-dl -x --audio-format mp3 \"$YOUTUBE\" -o \"$NAME.mp4\""
+echo "Executing:" $CMD
+eval $CMD

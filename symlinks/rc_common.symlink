@@ -57,8 +57,12 @@ alias gedit='echo "Sorry, we use vim here.";'
 ###############################################################################
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
-export PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin:$PATH
+#export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+#export PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin:$PATH
+
+# Needed for homebrew
+export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/opt/openssl@1.1/bin:$PATH
 
 
 ###############################################################################
