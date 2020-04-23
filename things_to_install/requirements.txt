@@ -2,7 +2,9 @@
 # install system-level binaries.
 
 tldr
+ipdb
 ipython
+youtube-dl
 
 # ZSH things
 powerline-status
