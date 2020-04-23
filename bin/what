@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+the_rest="$*"
+
+pat='does (.*) do'
+
+not_found="documentation is not available."
+
+if [[ $the_rest =~ $pat ]]; then
+  cmd=${BASH_REMATCH[1]}
+  if [[ ! $(tldr $cmd 2>&1 | grep "$not_found") ]]; then
+    tldr $cmd
+  else
+    man $cmd
+  fi;
+else
+  echo "How to ask the thing:"
+  echo "  what does <jawn> do?"
+  exit 1
+fi;
