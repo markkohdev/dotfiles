@@ -66,22 +66,6 @@ export PATH=/usr/local/opt/openssl@1.1/bin:$PATH
 
 
 ###############################################################################
-# External (to this file) Configs
-###############################################################################
-if [ -f ${HOME}/.bash_aliases ]; then
-    source ${HOME}/.bash_aliases
-fi
-
-if [ -f ${HOME}/.bash_custom ]; then
-    . ${HOME}/.bash_custom
-fi
-
-if [ -f ${HOME}/.bash_additions ]; then
-    . ${HOME}/.bash_additions
-fi
-
-
-###############################################################################
 # History
 ###############################################################################
 # Make our history really big.  Don't forget things basically.
@@ -162,4 +146,20 @@ export LDFLAGS="-L$(brew --prefix openssl)/lib"
 if [ -f /usr/local/bin/activate.sh ]; then
     source `which activate.sh`
     cd .
+fi
+
+
+###############################################################################
+# External (to this file) Configs
+###############################################################################
+if [ -f ${HOME}/.bash_aliases ]; then
+    source ${HOME}/.bash_aliases
+fi
+
+if [ -f ${HOME}/.bash_custom ]; then
+    . ${HOME}/.bash_custom
+fi
+
+if [ -f ${HOME}/.bash_additions ]; then
+    . ${HOME}/.bash_additions
 fi

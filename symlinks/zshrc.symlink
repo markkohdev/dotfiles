@@ -46,7 +46,6 @@ antigen bundle git
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle virtualenv
-# antigen bundle virtualenvwrapper
 
 
 ####################################
@@ -69,11 +68,15 @@ POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_venv context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-antigen theme bhilburn/powerlevel9k powerlevel9k
+
+antigen theme romkatv/powerlevel10k
 
 # Tell Antigen that you're done.
 antigen apply
 
+# Aliases to temporarily deactivate Powerlevel10K
+alias deactivate_theme=prompt_powerlevel9k_teardown
+alias activate_theme=prompt_powerlevel9k_setup
 
 ###############################################################################
 # Basic shell setup

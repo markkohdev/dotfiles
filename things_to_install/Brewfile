@@ -5,6 +5,9 @@
 # zsh things
 tap 'sambadevi/powerlevel9k'
 
+# Dev things
+tap 'jesseduffield/lazygit'
+
 
 ###############################################################################
 # Binaries
@@ -24,6 +27,8 @@ brew 'tree'
 brew 'watch'
 brew 'wget'
 brew 'autojump'
+brew 'lazygit'
+brew 'bat'
 
 # Dev things
 brew 'imagemagick'

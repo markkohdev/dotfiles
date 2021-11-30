@@ -3,6 +3,9 @@
 # Custom bash aliases
 alias example='echo "Your alias"'
 
+alias lg='lazygit'
+
+
 alias webserver='cd /opt/code/webserver/'
 alias ngapp='cd /opt/code/ng-app/'
 
