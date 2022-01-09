@@ -5,7 +5,6 @@
 # zsh things
 tap 'sambadevi/powerlevel9k'
 
-
 ###############################################################################
 # Binaries
 ###############################################################################
@@ -33,3 +32,4 @@ brew 'pyenv'
 brew 'pyenv-virtualenv'
 brew 'pyenv-virtualenvwrapper'
 brew 'diff-so-fancy'
+brew 'rclone'

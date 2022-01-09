@@ -36,6 +36,9 @@ setopt share_history          # share command history data
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Uncomment the following line if pasting URLs and other text is messed up.
+DISABLE_MAGIC_FUNCTIONS=true
+
 ###############################################################################
 # Antigen configs
 ###############################################################################
@@ -57,6 +60,8 @@ custom_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
 
   # Early exit; $virtualenv_path must always be set.
+  # wing line if pasting URLs and other text is messed up.
+  # # DISABLE_MAGIC_FUNCTIONS=true
   [[ -z "$virtualenv_path" ]] && return
 
   echo -n "🐍 ${virtualenv_path:t} 🐍"
