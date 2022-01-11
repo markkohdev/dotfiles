@@ -36,6 +36,9 @@ setopt share_history          # share command history data
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Uncomment the following line if pasting URLs and other text is messed up.
+DISABLE_MAGIC_FUNCTIONS=true
+
 ###############################################################################
 # Antigen configs
 ###############################################################################

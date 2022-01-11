@@ -8,7 +8,6 @@ tap 'sambadevi/powerlevel9k'
 # Dev things
 tap 'jesseduffield/lazygit'
 
-
 ###############################################################################
 # Binaries
 ###############################################################################
@@ -38,3 +37,4 @@ brew 'pyenv'
 brew 'pyenv-virtualenv'
 brew 'pyenv-virtualenvwrapper'
 brew 'diff-so-fancy'
+brew 'rclone'
