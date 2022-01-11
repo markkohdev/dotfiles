@@ -170,3 +170,18 @@ if [ -f /usr/local/bin/activate.sh ]; then
     source `which activate.sh`
     cd .
 fi
+
+###############################################################################
+# GCloud SDK
+###############################################################################
+GCLOUD_INSTALLATION="/Users/$USER/google-cloud-sdk"
+if [ "$SHELL" == "/bin/bash" ]; then
+  if [ -f "$GCLOUD_INSTALLATION/path.bash.inc" ]; then . "$GCLOUD_INSTALLATION/path.bash.inc"; fi
+  if [ -f "$GCLOUD_INSTALLATION/completion.bash.inc" ]; then . "$GCLOUD_INSTALLATION/completion.bash.inc"; fi
+elif [ "$SHELL" == "/bin/zsh" ]; then
+  if [ -f "$GCLOUD_INSTALLATION/path.zsh.inc" ]; then . "$GCLOUD_INSTALLATION/path.zsh.inc"; fi
+  if [ -f "$GCLOUD_INSTALLATION/completion.zsh.inc" ]; then . "$GCLOUD_INSTALLATION/completion.zsh.inc"; fi
+fi
+
+# Set the gcloud command python
+export CLOUDSDK_PYTHON=$(which python3)
