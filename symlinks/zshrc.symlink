@@ -17,7 +17,6 @@ fi
 ###############################################################################
 # ZSH configs
 ###############################################################################
-
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -54,7 +53,6 @@ antigen bundle virtualenv
 ####################################
 # Powerlevel9k configs
 ####################################
-
 custom_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
 
