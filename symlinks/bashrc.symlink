@@ -9,6 +9,23 @@
 # ~/.bashrc: executed by bash(1) for interactive shells.
 
 ###############################################################################
+# Debugging utils
+###############################################################################
+STARTUP_DEBUG=false
+
+# Map `date` cmd to gdate on mac if available
+if [ -x "$(command -v gdate)" ]; then
+  alias date="gdate"
+fi
+
+# Log a debug message if STARTUP_DEBUG is true
+debug_msg() {
+  if [ "$STARTUP_DEBUG" = true ]; then
+    echo "[$(date +'%T.%N')]: " $@
+  fi
+}
+
+###############################################################################
 # Common Loader
 ###############################################################################
 if [ -f ${HOME}/.rc_common ]; then

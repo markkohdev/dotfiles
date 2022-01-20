@@ -1,5 +1,6 @@
 # Executed by all shells
 # All code should be sh-compliant
+debug_msg "start - rc_common"
 
 ###############################################################################
 # Basic Shell Setup
@@ -183,3 +184,8 @@ fi
 
 # Set the gcloud command python
 export CLOUDSDK_PYTHON=$(which python3)
+
+#######
+# End rc_common
+#######
+debug_msg "end - rc_common"
