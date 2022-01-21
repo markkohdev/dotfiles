@@ -3,6 +3,23 @@
 # Executed at zsh startup
 
 ###############################################################################
+# Debugging utils
+###############################################################################
+STARTUP_DEBUG=false
+
+# Map `date` cmd to gdate on mac if available
+if [ -x "$(command -v gdate)" ]; then
+  alias date="gdate"
+fi
+
+# Log a debug message if STARTUP_DEBUG is true
+debug_msg() {
+  if [ "$STARTUP_DEBUG" = true ]; then
+    echo "[$(date +'%T.%N')]: " $@
+  fi
+}
+
+###############################################################################
 # Common Loader
 ###############################################################################
 # Don't expand equals because that's annoying for bash scripts
@@ -51,7 +68,7 @@ antigen bundle virtualenv
 
 
 ####################################
-# Powerlevel9k configs
+# Powerlevel10k configs
 ####################################
 custom_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"

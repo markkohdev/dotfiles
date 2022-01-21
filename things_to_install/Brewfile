@@ -12,6 +12,7 @@ tap 'jesseduffield/lazygit'
 # Binaries
 ###############################################################################
 # Shell stuff
+brew 'coreutils'
 brew 'zsh'
 brew 'powerlevel9k'
 brew 'antigen'
