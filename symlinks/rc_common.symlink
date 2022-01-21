@@ -76,8 +76,12 @@ if [ -x /usr/local/bin/pyenv ]; then
     export PATH="$PYENV_ROOT/bin:$PATH"
 
     # Get that path in there
-    eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
+
+    # Check if we need to add shims to the path
+    if [ -z "$(echo $PATH | grep .pyenv/shims)" ]; then
+      eval "$(pyenv init --path)"
+    fi
 
     # Activate pyenv-virtualenv stuff
     # https://github.com/pyenv/pyenv-virtualenv
