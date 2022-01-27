@@ -21,5 +21,4 @@ alias master='git checkout master'
 alias development='git checkout development'
 
 alias please='sudo'
-alias newvenv='mkvirtualenv -p python3 ${PWD##*/}'
 
