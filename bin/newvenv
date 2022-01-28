@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-pyenv virtualenv ${PWD##*/}
-source activate ${PWD##*/}
+export NEW_ENV_NAME=${PWD##*/}
+pyenv virtualenv $NEW_ENV_NAME
+echo "Run the following command to activate your new venv:"
+echo "source activate $NEW_ENV_NAME"
