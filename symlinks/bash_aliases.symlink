@@ -22,3 +22,4 @@ alias development='git checkout development'
 
 alias please='sudo'
 
+alias reload='source ~/.${SHELL##*/}rc'

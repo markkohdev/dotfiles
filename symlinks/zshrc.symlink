@@ -34,6 +34,7 @@ fi
 ###############################################################################
 # ZSH configs
 ###############################################################################
+debug_msg "start - zsh configs"
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -55,9 +56,12 @@ setopt share_history          # share command history data
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
 
+debug_msg "end - zsh configs"
+
 ###############################################################################
 # Antigen configs
 ###############################################################################
+debug_msg "start - antigen configs"
 source $(brew --prefix)/share/antigen/antigen.zsh
 
 antigen use oh-my-zsh
@@ -66,10 +70,13 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle virtualenv
 
+debug_msg "end - antigen configs"
 
 ####################################
 # Powerlevel10k configs
 ####################################
+debug_msg "start - powerlevel10k configs"
+
 custom_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
 
@@ -78,6 +85,7 @@ custom_virtualenv() {
 
   echo -n "🐍 ${virtualenv_path:t} 🐍"
 }
+
 POWERLEVEL9K_CUSTOM_VENV="custom_virtualenv"
 POWERLEVEL9K_CUSTOM_VENV_BACKGROUND="grey70"
 POWERLEVEL9K_CUSTOM_VENV_FOREGROUND="black"
@@ -87,8 +95,12 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_venv context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
-antigen theme romkatv/powerlevel10k
+# You can't apply an antigen theme twice, so only call it if the theme isn't already applied
+# https://github.com/zsh-users/antigen/issues/675
+THEME="romkatv/powerlevel10k"
+antigen list 2>&1 | grep -q $THEME; if [ $? -ne 0 ]; then antigen theme $THEME; fi
 
+# TODO: Change this to use antigen init since it's theoretically faster
 # Tell Antigen that you're done.
 antigen apply
 
@@ -96,9 +108,15 @@ antigen apply
 alias deactivate_theme=prompt_powerlevel9k_teardown
 alias activate_theme=prompt_powerlevel9k_setup
 
+debug_msg "end - powerlevel10k configs"
+
 ###############################################################################
 # Basic shell setup
 ###############################################################################
+debug_msg "start - basic shell configs"
+
 # fzf: Command-line fuzzy-fetcher setup <3
 # If bindings aren't working, run `$(brew --prefix)/opt/fzf/install`
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+debug_msg "end - basic shell configs"

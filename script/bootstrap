@@ -35,6 +35,13 @@ fail () {
   exit
 }
 
+check_brew_installed () {
+  # Install brew dependencies
+  if [ -z $(which brew) ]; then
+    fail "Brew installation not found.  Please install brew and re-run the bootstrapper. \n    To install brew, see https://brew.sh/"
+  fi
+}
+
 setup_gitconfig () {
   if ! [ -f symlinks/gitconfig.symlink ]
   then
@@ -159,7 +166,7 @@ install_dotfiles () {
 }
 
 run_installers () {
-  source $DOTFILES_ROOT/script/install
+  source $DOTFILES_ROOT/script/run_installers
 }
 
 install_fonts () {
@@ -174,6 +181,8 @@ install_fonts () {
   done
 }
 
+# Call all the functions defined above
+check_brew_installed
 setup_gitconfig
 create_templates
 install_dotfiles

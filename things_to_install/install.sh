@@ -12,6 +12,9 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 if [ ! -z $(which brew) ]; then
   brew update
   brew bundle --file $SCRIPT_DIR/Brewfile
+
+  # To install useful key bindings and fuzzy completion:
+  $(brew --prefix)/opt/fzf/install
 else
   echo "Brew installation not found.  Skipping Brewfile installation."
   echo "To install brew, see https://brew.sh/"
@@ -25,3 +28,5 @@ if [ ! -z $(which pip) ]; then
 else
   echo "Pip installation not found.  Skipping pip installation."
 fi
+
+

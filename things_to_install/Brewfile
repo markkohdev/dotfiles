@@ -30,6 +30,7 @@ brew 'autojump'
 brew 'lazygit'
 brew 'bat'
 brew 'rclone'
+brew 'grpcurl'
 
 # Dev things
 brew 'imagemagick'
@@ -40,3 +41,4 @@ brew 'pyenv-virtualenv'
 brew 'pyenv-virtualenvwrapper'
 brew 'diff-so-fancy'
 brew 'pyenv-virtualenv'
+brew 'ffmpeg'
