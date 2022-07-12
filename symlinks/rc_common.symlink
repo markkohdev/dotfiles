@@ -61,32 +61,41 @@ export PATH=$HOME/dotfiles/bin:$PATH
 #export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 #export PATH=/Library/Frameworks/Python.framework/Versions/3.6/bin:$PATH
 
-# Needed for homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH=/usr/local/sbin:$PATH
-export PATH=/usr/local/opt/openssl@1.1/bin:$PATH
 
+###############################################################################
+# Homebrew modifications
+###############################################################################
+# Add homebrew to the path
+export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+eval "$(/usr/local/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+alias brew-rosetta="/usr/local/bin/brew"
 
 ###############################################################################
 # Pyenv Setup
 ###############################################################################
 debug_msg "start - pyenv setup"
-if [ -x $(brew --prefix)/bin/pyenv ]; then
+# Note: We use brew-rosetta below because we want to use the python on rosetta to
+# circumvent the current Tensorflow <> M1 incompatibility
+if [ -x $(brew-rosetta --prefix)/bin/pyenv ]; then
+    PYENV_CMD=$(brew-rosetta --prefix)/bin/pyenv
+
     # Needed for linux
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 
     # Get that path in there
-    eval "$(pyenv init -)"
+    eval "$($PYENV_CMD init -)"
 
     # Check if we need to add shims to the path
     if [ -z "$(echo $PATH | grep .pyenv/shims)" ]; then
-      eval "$(pyenv init --path)"
+      eval "$($PYENV_CMD init --path)"
     fi
 
     # Activate pyenv-virtualenv stuff
     # https://github.com/pyenv/pyenv-virtualenv
-    eval "$(pyenv virtualenv-init -)"
+    eval "$($PYENV_CMD virtualenv-init -)"
 
     # Add some handy aliases
     alias workon="source activate"
@@ -96,8 +105,17 @@ if [ -x $(brew --prefix)/bin/pyenv ]; then
 
     # Add some convenience functions
     function newvenv() {
+        # Use the current dir name as the env name
         export NEW_ENV_NAME=${PWD##*/}
-        pyenv virtualenv $NEW_ENV_NAME
+
+        # If no args were passed, use the global python version.
+        # Otherwise use the first arg as the python version.
+        if [ -z "$1" ]; then
+            eval "$PYENV_CMD virtualenv $NEW_ENV_NAME"
+        else
+            eval "$PYENV_CMD virtualenv $1 $NEW_ENV_NAME"
+        fi
+
         echo "Run the following command to activate your new venv:"
         echo "    work"
         # check pyenv section of rc_common for nice aliases
@@ -106,15 +124,20 @@ if [ -x $(brew --prefix)/bin/pyenv ]; then
     }
 fi
 
+function setpyenvflags() {
+    echo "Setting CFLAGS and LDFLAGS env vars for pyenv.  This may take a moment..."
+    export CFLAGS="-I$(brew-rosetta --prefix openssl)/include -I$(brew-rosetta --prefix)/include -I$(xcrun --show-sdk-path)/usr/include -Wno-implicit-function-declaration"
+    export LDFLAGS="-L$(brew-rosetta --prefix openssl)/lib"
+}
+
 # Uncomment the following lines if having issues with installing python versions
 # into pyenv but tbh maybe better to just set these env vars before installing
 # since they really slow down shell startup :/
 # Setup pyenv env vars (otherwise we get weird errors as per https://github.com/pyenv/pyenv/wiki/common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib)
-export CFLAGS="-I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include -Wno-implicit-function-declaration"
-export LDFLAGS="-L$(brew --prefix openssl)/lib"
+# setpyenvflags
 
 # Blech -- export this until tensorflow is ARM compatible
-export HDF5_DIR="$(brew --prefix hdf5)"
+export HDF5_DIR="$(brew-rosetta --prefix hdf5)"
 
 debug_msg "end - pyenv setup"
 
