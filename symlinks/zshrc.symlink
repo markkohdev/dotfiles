@@ -105,8 +105,15 @@ antigen list 2>&1 | grep -q $THEME; if [ $? -ne 0 ]; then antigen theme $THEME; 
 antigen apply
 
 # Aliases to temporarily deactivate Powerlevel10K
-alias deactivate_theme=prompt_powerlevel9k_teardown
-alias activate_theme=prompt_powerlevel9k_setup
+deactivate_theme() {
+  prompt_powerlevel9k_teardown
+  export PROMPT='$ '
+}
+activate_theme() {
+  prompt_powerlevel9k_setup
+}
+alias untheme=deactivate_theme
+alias retheme=activate_theme
 
 debug_msg "end - powerlevel10k configs"
 

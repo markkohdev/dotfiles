@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
  Take a nap, look like you're waiting for something to compile or something
  put in ~/bin and add ~/bin to your PATH, make sure this file has execute perms (chmod +x nap)
@@ -61,5 +61,5 @@ while(True):
             if coloring:
                 output = "{}{}{}".format(coloring, output, bcolors.ENDC)
 
-            print output
+            print(output)
 
