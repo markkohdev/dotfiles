@@ -2,11 +2,10 @@
 # Mark's custom zsh config
 # Executed at zsh startup
 
-echo "ASIJDIASJ"
 ###############################################################################
 # Debugging utils
 ###############################################################################
-STARTUP_DEBUG=true
+STARTUP_DEBUG=false
 
 # Map `date` cmd to gdate on mac if available
 if [ -x "$(command -v gdate)" ]; then

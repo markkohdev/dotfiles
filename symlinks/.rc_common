@@ -57,11 +57,10 @@ alias gedit='echo "Sorry, we use vim here.";'
 # PATH modifications
 ###############################################################################
 export PATH=$HOME/bin:$PATH
+export PATH=/usr/local/sbin:$PATH
 export PATH=$HOME/dotfiles/bin:$PATH
 
-# Needed for homebrew
-export PATH=/opt/homebrew/bin:$PATH
-eval "$(brew shellenv)"
+
 
 # Not needed anymore?
 # export PATH=/usr/local/opt/openssl@1.1/bin:$PATH
@@ -70,11 +69,12 @@ eval "$(brew shellenv)"
 # Homebrew modifications
 ###############################################################################
 # Add homebrew to the path
-export PATH=/usr/local/sbin:$PATH
 export PATH=/usr/local/bin:$PATH
-eval "$(/usr/local/bin/brew shellenv)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-alias brew-rosetta="/usr/local/bin/brew"
+export PATH=/opt/homebrew/bin:$PATH
+eval "$(brew shellenv)"
+
+# I can't remember why this was specifically needed, but it used to point to /usr/local/bin/brew?  Pointing it to just brew until I update my work laptop
+alias brew-rosetta=$(which brew)
 
 ###############################################################################
 # Pyenv Setup
