@@ -2,10 +2,11 @@
 # Mark's custom zsh config
 # Executed at zsh startup
 
+echo "ASIJDIASJ"
 ###############################################################################
 # Debugging utils
 ###############################################################################
-STARTUP_DEBUG=false
+STARTUP_DEBUG=true
 
 # Map `date` cmd to gdate on mac if available
 if [ -x "$(command -v gdate)" ]; then
@@ -127,3 +128,4 @@ debug_msg "start - basic shell configs"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 debug_msg "end - basic shell configs"
+

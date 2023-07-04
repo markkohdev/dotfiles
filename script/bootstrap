@@ -43,7 +43,7 @@ check_brew_installed () {
 }
 
 setup_gitconfig () {
-  if ! [ -f symlinks/gitconfig.symlink ]
+  if ! [ -f symlinks/.gitconfig ]
   then
     info 'setup gitconfig'
 
@@ -58,7 +58,7 @@ setup_gitconfig () {
     user ' - What is your github author email?'
     read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" symlinks/gitconfig.symlink.example > symlinks/gitconfig.symlink
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" symlinks/.gitconfig.example > symlinks/.gitconfig
 
     success 'gitconfig'
   fi
@@ -68,7 +68,7 @@ setup_gitconfig () {
 link_file () {
   local src=$1 dst=$2
 
-  local overwrite= backup= skip=
+  local overwrite=true backup= skip=
   local action=
 
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
@@ -158,13 +158,18 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  # TODO: Finish this up
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink*')
+  for src in $(ls -a $DOTFILES_ROOT/symlinks)
   do
-    dst="$HOME/.$(basename "${src%.*}")"
-    link_file "$src" "$dst"
+    if [[ "$src" != "." ]] && [[ "$src" != ".." ]] && [[ "$src" != ".gitconfig.example" ]]
+    then
+      dst="$HOME/$(basename $src)"
+      link_file "$DOTFILES_ROOT/symlinks/$src" "$dst"
+    fi
   done
 }
+
+install_dotfiles
+
 
 run_installers () {
   source $DOTFILES_ROOT/script/run_installers
