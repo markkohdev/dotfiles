@@ -52,6 +52,8 @@ alias la='ls -A'                              # all but . and ..
 alias emacs='echo "Sorry, we use vim here.";'
 alias gedit='echo "Sorry, we use vim here.";'
 
+# Docker aliases
+alias docker-bash='docker run -ti --entrypoint /bin/bash'
 
 ###############################################################################
 # PATH modifications
@@ -106,26 +108,6 @@ if [ -x $(brew-rosetta --prefix)/bin/pyenv ]; then
     alias work='source activate ${PWD##*/}'
     alias deactivate="source deactivate"
     alias delenv='deactivate && pyenv virtualenv-delete ${PWD##*/}'
-
-    # Add some convenience functions
-    function newvenv() {
-        # Use the current dir name as the env name
-        export NEW_ENV_NAME=${PWD##*/}
-
-        # If no args were passed, use the global python version.
-        # Otherwise use the first arg as the python version.
-        if [ -z "$1" ]; then
-            eval "$PYENV_CMD virtualenv $NEW_ENV_NAME"
-        else
-            eval "$PYENV_CMD virtualenv $1 $NEW_ENV_NAME"
-        fi
-
-        echo "Run the following command to activate your new venv:"
-        echo "    work"
-        # check pyenv section of rc_common for nice aliases
-        echo "      (or source activate $NEW_ENV_NAME if you don't have 'work' aliased)"
-        echo ""
-    }
 fi
 
 function setpyenvflags() {
@@ -165,7 +147,7 @@ fi
 ###############################################################################
 # Make our history really big.  Don't forget things basically.
 export HISTSIZE=1000000
-export HISTFILESIZE=100000
+export HISTFILESIZE=1000000
 export SAVEHIST=$HISTSIZE
 
 # Ignore some controlling instructions

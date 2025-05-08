@@ -643,8 +643,6 @@
 	<string>66ED2540-98DF-4303-91FE-CB4E4C374210</string>
 	<key>DimOnlyText</key>
 	<false/>
-	<key>DisableWindowSizeSnap</key>
-	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>Hotkey</key>
@@ -1579,7 +1577,7 @@
 				<string>1</string>
 			</dict>
 			<key>Guid</key>
-			<string>D89AAD9C-7543-4CB9-AD1F-2A3AB18950C0</string>
+			<string>8275DF5C-FD91-4E4D-9938-B51F49B08A7E</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>

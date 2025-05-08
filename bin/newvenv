@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Convenience function for creating a new virtualenv using flags for environment name and Python version
+
+# Default environment name based on current directory name
+DEFAULT_ENV_NAME="${PWD##*/}"
+ENV_NAME="$DEFAULT_ENV_NAME"
+PYTHON_VERSION=""
+PYTHON_VERSION_SELECTED=""
+
+# Parse command line options for environment name (-n or --name) and Python version (-p or --python)
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -n|--name) ENV_NAME="$2"; shift ;;
+        -p|--python) PYTHON_VERSION="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+# If Python version is not specified, list all available versions and ask the user to choose one
+if [ -z "$PYTHON_VERSION" ]; then
+    echo "Available Python versions:"
+    pyenv versions
+    DEFAULT_PYTHON_VERSION=$(pyenv global)
+    read -p "Enter the Python version you would like to use (default: $DEFAULT_PYTHON_VERSION): " PYTHON_VERSION_SELECTED
+    PYTHON_VERSION=${PYTHON_VERSION_SELECTED:-$DEFAULT_PYTHON_VERSION}
+fi
+
+# Create the virtual environment with the specified Python version and environment name
+eval "pyenv virtualenv $PYTHON_VERSION $ENV_NAME"
+
+# Ask the user if they want to set this new environment as the default local environment
+read -p "Do you want to set this environment as the default local environment? (y/n): " SET_DEFAULT
+if [[ $SET_DEFAULT == "y" || $SET_DEFAULT == "Y" ]]; then
+    eval "pyenv local $ENV_NAME"
+    echo "The $ENV_NAME environment is now set as the default local environment."
+fi
+
+cat <<EOF
+Run the following command to activate your new venv from the current directory:
+    $ work
+  (or pyenv activate $ENV_NAME if you don't have 'work' aliased)
+
+or if you aren't in the current directory:
+    $ workon $ENV_NAME
+EOF

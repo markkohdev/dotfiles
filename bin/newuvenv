@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Convenience function for creating a new virtualenv using flags for environment name and Python version
+
+# Default environment name based on current directory name
+DEFAULT_ENV_NAME="${PWD##*/}"
+ENV_NAME="$DEFAULT_ENV_NAME"
+PYTHON_VERSION=""
+PYTHON_VERSION_SELECTED=""
+
+# Parse command line options for environment name (-n or --name) and Python version (-p or --python)
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -h|--help)
+            echo "Usage: newvenv [-n|--name ENV_NAME] [-p|--python PYTHON_VERSION] [-h|--help]"
+            echo ""
+            echo "Options:"
+            echo "  -n, --name      Set custom environment name (default: current directory name)"
+            echo "  -p, --python    Specify Python version to use"
+            echo "  -h, --help      Show this help message"
+            exit 0
+            ;;
+        -n|--name) ENV_NAME="$2"; shift ;;
+        -p|--python) PYTHON_VERSION="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+# Check if virtualenv already exists
+VENV_PATH=".venv"
+if [ -d "$VENV_PATH" ]; then
+    echo "Virtual environment '$ENV_NAME' already exists at $VENV_PATH"
+    read -p "Do you want to delete and recreate it? (y/n): " RECREATE
+    if [[ $RECREATE == "y" || $RECREATE == "Y" ]]; then
+        echo "Deleting existing virtual environment..."
+        rm -rf "$VENV_PATH"
+    else
+        echo "Operation cancelled."
+        exit 0
+    fi
+fi
+
+# If Python version is not specified, list all available versions and ask the user to choose one
+if [ -z "$PYTHON_VERSION" ]; then
+    echo "Available Python versions:"
+    uv python list --only-installed | awk '{print $1}' | uniq | sort -V | awk -F'-' '{print $2}'
+    # Get the default Python version from the users home .venv
+    DEFAULT_PYTHON_VERSION=$(~/.venv/bin/python --version | awk '{print $2}')
+    read -p "Enter the Python version you would like to use (default: $DEFAULT_PYTHON_VERSION): " PYTHON_VERSION_SELECTED
+    PYTHON_VERSION=${PYTHON_VERSION_SELECTED:-$DEFAULT_PYTHON_VERSION}
+fi
+
+# Create the virtual environment with the specified Python version and environment name
+uv venv --python "$PYTHON_VERSION" --prompt "$ENV_NAME" "$VENV_PATH"
+
+# Ask the user if they want to set this new environment as the default local environment
+# read -p "Do you want to set this environment as the default local environment? (y/n): " SET_DEFAULT
+# if [[ $SET_DEFAULT == "y" || $SET_DEFAULT == "Y" ]]; then
+#     echo "$VENV_PATH" > .python-version
+#     uv python pin "$VENV_PATH"
+#     echo "The $ENV_NAME environment is now set as the default local environment."
+# fi
+
+cat <<EOF
+Run the following command to activate your new venv from the current directory:
+    $ work
+  (or source $VENV_PATH/bin/activate if you don't have 'work' aliased)
+
+EOF
