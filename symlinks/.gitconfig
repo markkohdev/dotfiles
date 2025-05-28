@@ -4,24 +4,25 @@
 [hub]
         protocol = https
 [user]
-        name = Mark Koh
-        email = markkohdev@gmail.com
+	name = Mark Koh
+	email = markkoh@spotify.com
 [credential]
-        helper = cache
+        helper = osxkeychain
 [alias]
         co = checkout
-        promote = !#bash/bin/git-promote
-        wtf     = !#bash/bin/git-wtf
-        rank-contributors = !#bash/bin/git-rank-contributors
-        count   = !git shortlog -sn
+        promote = ! #bash/bin/git-promote
+        wtf = ! #bash/bin/git-wtf
+        rank-contributors = !$ZSH/bin/git-rank-contributors
+        count = !git shortlog -sn
 [color]
         diff = auto
         status = auto
         branch = auto
-        ui = true
+	ui = true
 [core]
         excludesfile = ~/.gitignore
         editor = vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -31,7 +32,26 @@
 [help]
         autocorrect = 1
 [push]
-        default = current
-
-[pull]
-        default=current
+        # See `git help config` (search for push.default)
+        # for more information on different options of the below setting.
+        #
+        # Setting to git 2.0 default to suppress warning message
+	default = current
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[filesystem "Oracle Corporation|11.0.2|/dev/disk1s5"]
+	timestampResolution = 6000 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Oracle Corporation|1.8.0_181|/dev/disk1s5"]
+	timestampResolution = 1002 milliseconds
+	minRacyThreshold = 0 nanoseconds

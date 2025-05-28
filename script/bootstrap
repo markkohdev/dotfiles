@@ -68,7 +68,7 @@ setup_gitconfig () {
 link_file () {
   local src=$1 dst=$2
 
-  local overwrite=true backup= skip=
+  local overwrite= backup= skip=
   local action=
 
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
@@ -87,7 +87,7 @@ link_file () {
       else
 
         user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup and link, [B]ackup and link all?"
         read -n 1 action
 
         case "$action" in
@@ -167,8 +167,6 @@ install_dotfiles () {
     fi
   done
 }
-
-install_dotfiles
 
 
 run_installers () {
