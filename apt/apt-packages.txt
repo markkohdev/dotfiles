@@ -2,3 +2,4 @@
 zsh
 zsh-antigen
 fzf
+jq

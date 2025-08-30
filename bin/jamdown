@@ -1,6 +1,0 @@
-#!/bin/bash
-echo "***Suspending Jambox***"
-cd $HOME/dev/jambox;
-vagrant suspend;
-echo "***Jambox Suspended***"
-

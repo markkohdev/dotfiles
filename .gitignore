@@ -1,13 +1,4 @@
-atom.symlink/.node-gyp
-atom.symlink/.storage
-atom.symlink/compile-cache/
-atom.symlink/packages
-atom.symlink/storage
-atom.symlink/themes
-
 symlinks/.gitconfig
-things_to_install/Brewfile.lock.json
-
 symlinks/bash_custom.symlink
-
+symlinks/.*.bak
 iterm/iTerm2-Color-Schemes

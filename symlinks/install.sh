@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+printsection "Installing dotfiles"
+
+link_file () {
+    local src=$1 dst=$2
+    local overwrite= backup= skip= 
+    local action=
+
+    if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
+        if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
+            local currentSrc="$(readlink $dst)"
+
+            if [ "$currentSrc" == "$src" ]; then
+                skip=true;
+            else
+                user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+                [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup and link, [B]ackup and link all?"
+                read -r action
+
+                info "action: $action"
+
+                case "$action" in
+                    o ) overwrite=true;;
+                    O ) overwrite_all=true;;
+                    b ) backup=true;;
+                    B ) backup_all=true;;
+                    s ) skip=true;;
+                    S ) skip_all=true;;
+                    * ) ;;
+                esac
+            fi
+        fi
+
+        overwrite=${overwrite:-$overwrite_all}
+        backup=${backup:-$backup_all}
+        skip=${skip:-$skip_all}
+
+        if [ "$overwrite" == "true" ]; then
+            rm -rf "$dst"
+            success "removed $dst"
+        fi
+
+        if [ "$backup" == "true" ]; then
+            mv "$dst" "${dst}.backup"
+            success "moved $dst to ${dst}.backup"
+        fi
+
+        if [ "$skip" == "true" ]; then
+            success "skipped $src"
+        fi
+    fi
+
+    # "false" or empty
+    if [ "$skip" != "true" ]; then
+        info "linking $1 to $2"
+        ln -s "$1" "$2"
+        success "linked $1 to $2"
+    fi
+}
+
+info "Setting up gitconfig"
+if ! [ -f symlinks/.gitconfig ]; then
+    info 'setup gitconfig'
+
+    git_credential='cache'
+    if [ "$(uname -s)" == "Darwin" ]; then
+        git_credential='osxkeychain'
+    fi
+
+    user ' - What is your github author name?'
+    read -e git_authorname
+    user ' - What is your github author email?'
+    read -e git_authoremail
+
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" symlinks/.gitconfig.example > symlinks/.gitconfig
+
+    success 'gitconfig'
+fi
+
+
+if [ ! -f ~/.bash_custom ]; then
+    info "Creating .bash_custom file"
+    cat << EOF >> ~/.bash_custom
+#!/usr/bin/env bash
+
+# Machine-specific bash commands here
+
+EOF
+fi
+
+install_dotfiles () {
+    info "Installing symlinks"
+    local overwrite_all=false backup_all=false skip_all=false
+
+    for src in $(ls -a $DOTFILES_ROOT/symlinks); do
+        if [[ "$src" != "." ]] \
+        && [[ "$src" != ".." ]] \
+        && [[ "$src" != ".gitconfig.example" ]] \
+        && [[ "$src" != "install.sh" ]]; then
+            dst="$HOME/$(basename $src)"
+            link_file "$DOTFILES_ROOT/symlinks/$src" "$dst"
+        fi
+    done
+}
+
+install_dotfiles

@@ -73,7 +73,7 @@ export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups:erasedups
 LINUX=true
 
 # Also enable mac bash completion for git because it sucks by default
-if [ ! -z $(which brew) ]; then
+if command -v brew >/dev/null 2>&1; then
     # We're on mac!
     LINUX=false
 
@@ -97,38 +97,53 @@ COLOR_BLUE="\033[0;34m"
 COLOR_WHITE="\033[0;37m"
 COLOR_RESET="\033[0m"
 
+# If there is a virtualenv active, add it to the prompt
+function virtualenv_prompt() {
+    # Check if virtualenv is active
+    local venv_part=""
+    if [ -n "$VIRTUAL_ENV_PROMPT" ]; then
+        venv_part="($VIRTUAL_ENV_PROMPT) "
+    fi
+    echo "$venv_part"
+}
+# Venv activation scripts do weird things to the prompt, so we disable it
+# and handle it ourselves above
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+
 # If there are repos that shouldn't be git colored (i.e: large repos)
 # then add them here
 DONT_GIT_COLOR=("/Users/markkoh/spotify/android_client")
 
 # Get the appropriate color for the git branch
 function git_color {
-	# Don't run this for large git repos (specified in the array above)
-	if array_contains DONT_GIT_COLOR $(pwd); then
-		echo -e $COLOR_OCHRE
-	else
-		local git_status="$(git status --ignore-submodules 2> /dev/null)"
-		# Unclean tree says "directory" on unix but "tree" on mac
-		[[ $LINUX ]] && local tree_jawn="directory" || local tree_jawn="tree"
+  # Don't run this for large git repos (specified in the array above)
+  if array_contains DONT_GIT_COLOR $(pwd); then
+    echo -e $COLOR_OCHRE
+  else
+    local git_status="$(git status --ignore-submodules 2> /dev/null)"
+    # Unclean tree says "directory" on unix but "tree" on mac
+    [[ $LINUX ]] && local tree_jawn="directory" || local tree_jawn="tree"
 
-		if [[ ! "$git_status" =~ "working $tree_jawn clean" ]]; then
-			echo -e $COLOR_RED
-		elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
-			echo -e $COLOR_YELLOW
-		elif [[ "$git_status" =~ "nothing to commit" ]]; then
-			echo -e $COLOR_GREEN
-		else
-			echo -e $COLOR_OCHRE
-		fi
-	fi
+    if [[ ! "$git_status" =~ "working $tree_jawn clean" ]]; then
+      echo -e $COLOR_RED
+    elif [[ "$git_status" =~ "Your branch is ahead of" ]]; then
+      echo -e $COLOR_YELLOW
+    elif [[ "$git_status" =~ "nothing to commit" ]]; then
+      echo -e $COLOR_GREEN
+    else
+      echo -e $COLOR_OCHRE
+    fi
+  fi
 }
 
 function parse_git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
 # Build up the prompt
-PS1="["  # Open square bracket
+PS1="\$(virtualenv_prompt)"  # Virtualenv prompt (evaluated at expansion)
+PS1+="["  # Open square bracket
 PS1+="\e[1;32m"  # GREEN
 PS1+="\u@\h-$SYSTEM_ENV "  # user@hostname
 PS1+="\e[m"  # WHITE
@@ -152,3 +167,6 @@ case ${TERM} in
 esac
 
 
+export PATH=/opt/spotify-devex/bin:$PATH
+
+. "$HOME/.local/bin/env"

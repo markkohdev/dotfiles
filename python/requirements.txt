@@ -1,10 +1,10 @@
 # This is a global python requirements file that can be used to
 # install system-level binaries.
-
 tldr
 ipdb
 ipython
 youtube-dl
+lazygit-py
 
 # ZSH things
 powerline-status

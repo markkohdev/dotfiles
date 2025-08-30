@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")"
+DOTFILES_ROOT=$(pwd)
+set -e
+
+########################################################
+# START: Utility function definitions
+########################################################
+
+# Utility to add a line to a file if it does not already exist
+# Example usage:
+#   append_file ~/.bashrc "export MY_VARIABLE=my_value"
+append_file() {
+  local file_to_append="$1"
+  local line_to_add="$2"
+
+  # Check if the line is already in the file
+  if ! grep -Fxq "$line_to_add" $file_to_append; then
+    # If the line is not found, add it to the end of the file
+    echo "$line_to_add" >> $file_to_append
+    echo "Line added to $file_to_append: $line_to_add"
+  else
+    echo "Line already exists in .bashrc: $line_to_add"
+  fi
+}
+
+# Print a nice delimited section header
+printsection() {
+  echo "------------------------------------------------------------"
+  echo "$1"
+  echo "------------------------------------------------------------"
+}
+
+info () {
+  printf "  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+########################################################
+# END: Utility function definitions
+########################################################
+
+########################################################
+# START: Main function definitions
+########################################################
+
+# Determine what machine we're on
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine="Linux";;
+    Darwin*)    machine="Mac";;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+setup_brew () {
+  # Install brew dependencies
+  if [ "$machine" == "Mac" ]; then 
+    printsection "Setting up Brew 🍺"
+
+    if ! command -v brew >/dev/null 2>&1; then
+      info "Brew installation not found.  Installing now..."
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        info "Brew installation found."
+    fi
+    info "Updating Homebrew..."
+    brew update
+
+    echo
+    info "Installing dependencies from Brewfile..."
+    brew bundle --file $DOTFILES_ROOT/brew/Brewfile
+  fi
+}
+
+setup_apt () {
+  if [ "$machine" == "Linux" ]; then
+    printsection "Setting up apt packages 📦"
+    PACKAGES_FILE="$DOTFILES_ROOT/apt/apt-packages.txt"
+    if command -v apt >/dev/null 2>&1; then
+      info "Apt installation found.  Installing apt dependencies..."
+      sudo apt update
+      grep -vE '^\s*#|^\s*$' "$PACKAGES_FILE" | xargs sudo apt -y install
+    elif command -v apt-get >/dev/null 2>&1; then
+      info "Apt-get installation found.  Installing apt-get dependencies..."
+      sudo apt-get update
+      grep -vE '^\s*#|^\s*$' "$PACKAGES_FILE" | xargs sudo apt-get -y install
+    else
+      fail "Apt installation not found.  Skipping apt installation."
+    fi
+  fi
+}
+
+setup_ohmyzsh () {
+  # Check if oh-my-zsh is installed and if not, install it
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    printsection "Installing oh-my-zsh 🐢"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    success "oh-my-zsh installed!"
+  fi
+
+  # Check if zsh is the default shell and prompt the user to change it if not
+  if [ "$SHELL" != "/bin/zsh" ]; then
+    read -p "You appear to be running this script from $SHELL.  Would you like to change your default shell to zsh? (y/n): " response
+    case "$response" in
+      [yY][eE][sS]|[yY])
+        chsh -s /bin/zsh
+        success "Default shell changed to zsh!"
+        ;;
+      *)
+        info "Skipping uv and python installation."
+        return
+        ;;
+    esac
+  fi
+}
+
+run_installers () {
+  printsection "Running installers 🔎"
+  cd $DOTFILES_ROOT
+
+  # find the installers and run them iteratively
+  for installer in $(find . -name install.sh); do
+    source "${installer}"
+  done
+
+  printsection "Installers run successfully"
+  cd $DOTFILES_ROOT
+}
+
+########################################################
+# END: Main function definitions
+########################################################
+
+########################################################
+# START: Main function
+########################################################
+
+printsection "🚀 Bootstrapping your system 🚀"
+
+# Call all the functions defined above
+setup_brew
+setup_apt
+setup_ohmyzsh
+run_installers
+
+echo ''
+info '  All installed!'
+info '  You may need to restart your terminal for the changes to take effect.'
+
+########################################################
+# END: Main function
+########################################################
