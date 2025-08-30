@@ -1,90 +1,71 @@
-# ~~holman~~ mark does dotfiles
+# Mark's Dotfiles 🛠️
+Welcome! This is my highly opinionated collection of dotfiles and setup scripts for making a fresh Mac or Linux system feel like home. I keep this repo public because friends and coworkers sometimes ask about my setup, and you're welcome to borrow ideas or use anything you find helpful. 😊
 
-Very much forked and hacked from [Zach Holman's dotfiles](https://github.com/holman/dotfiles)
+The main things this sets up are:
+- [Brew](https://brew.sh/) packages (for Mac)
+- [Apt](https://apt-get.org/) packages (for Linux)
+- [Oh-my-zsh](https://ohmyz.sh/) (for a better shell experience)
+- Python and [uv](https://github.com/astral-sh/uv) (with a global virtual environment)
+- Symlinks which set up zsh and bash in the way that I like them :)
 
-## dotfiles
+## 🚀 Quickstart
+1. **Clone this repo:**
+  ```sh
+  git clone https://github.com/markkohdev/dotfiles.git ~/.dotfiles
+  cd ~/.dotfiles
+  ```
+2. **Run the bootstrap script:**
+  ```sh
+  ./bootstrap
+  ```
+  This will:
+  - Install Homebrew (on Mac) or apt packages (on Linux) 🍺
+  - Set up oh-my-zsh (for a better shell experience) 🐚
+  - Run all the module installers (fonts, python, symlinks, etc) ⚡️
 
-Your dotfiles are how you personalize your system. These are mine.
+3. **Restart your terminal** to pick up all the changes. 🔄
 
-I was a little tired of having long alias files and everything strewn about
-(which is extremely common on other dotfiles projects, too). That led to this
-project being much more topic-centric. I realized I could split a lot of things
-up into the main areas I used (Ruby, git, system libraries, and so on), so I
-structured the project accordingly.
+## What Does `bootstrap` Do?
+The `bootstrap` script:
+- Detects if you’re on a Mac or Linux (Windows is not supported)
+- Installs Homebrew and everything in `brew/Brewfile` (Mac), or apt packages from `apt/apt-packages.txt` (Linux)
+- Installs [oh-my-zsh](https://ohmyz.sh/) if needed, and offers to set zsh as your default shell
+- Runs every `install.sh` it finds in the modules (fonts, python, symlinks, etc)
+- Prints progress and info as it goes (with a few friendly emojis)
 
-If you're interested in the philosophy behind why projects like these are
-awesome, you might want to [read my post on the
-subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
+## Modules & What They Do
+This repo is organized into folders, each with a specific purpose:
+- **`bin/`**: Useful scripts and command-line tools. All scripts here are added to your `$PATH`.
+- **`brew/`**: Homebrew packages for Mac. Edit `Brewfile` to customize. 🍺
+- **`apt/`**: Apt packages for Linux. Edit `apt-packages.txt` as needed. 📦
+- **`fonts/`**: Installs fonts for your terminal (e.g., Powerline support). 🖋️
+- **`python/`**: Sets up a global Python virtual environment using [uv](https://github.com/astral-sh/uv), and installs tools from `requirements.txt`. 🐍
+- **`symlinks/`**: Symlinks dotfiles (like `.vimrc`, `.zshrc`, etc) into your home directory. If a file exists, you can choose to overwrite, backup, or skip.
+- **`sublime/`**: Settings for Sublime Text.
+- **`iterm/`**: iTerm2 profiles and settings for Mac.
 
-## install
+## Customization
+Add your own scripts or configs by dropping them in the appropriate folder. To add a new module, create a new folder with an `install.sh`—it will be picked up automatically.
 
-Run this:
+## Notable Scripts in `bin/`
+- `banana`, `pizza`: Fun little scripts. Not essential, but entertaining. 🍌🍕
+- `git-wtf`: Shows you what's going on in your git repo.
+- `nap`: Take a break. Your computer will wait. 😴
+- `emojify`: Adds emoji to your output. 😃
+- `search`, `remove-quotes`, `docker-cleanup`, `download-song`, `what`, `subl`, `sublime`, `newvenv`: Other utilities—explore as needed.
 
-```sh
-git clone https://github.com/markkohdev/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./bootstrap
-```
+## FAQ
+**Q: Is this safe to run?**
+A: It’s as safe as running a bunch of scripts you found on the internet can be. Read the code if you’re worried!
 
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
+**Q: Can I use this on Windows?**
+A: Not unless you like pain.
 
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+**Q: Why so many emojis?**
+A: Why not?
 
-`dot` is a simple script that installs some dependencies, sets sane OS X
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
+**Q: Why is this public?**
+A: Mostly for my own use, but I keep it public in case friends, coworkers, or anyone else is curious or wants to borrow ideas.
 
-## topical
-
-Everything's built around topic areas. If you're adding a new area to your
-forked dotfiles — say, "Java" — you can simply add a `java` directory and put
-files in there. Anything with an extension of `.zsh` will get automatically
-included into your shell. Anything with an extension of `.symlink` will get
-symlinked without extension into `$HOME` when you run `script/bootstrap`.
-
-## what's inside
-
-A lot of stuff. Seriously, a lot of stuff. Check them out in the file browser
-above and see what components may mesh up with you.
-[Fork it](https://github.com/holman/dotfiles/fork), remove what you don't
-use, and build on what you do use.
-
-## components
-
-There's a few special files in the hierarchy.
-
-- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
-  available everywhere.
-- **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
-  environment.
-- **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
-  expected to setup `$PATH` or similar.
-- **topic/completion.zsh**: Any file named `completion.zsh` is loaded
-  last and is expected to setup autocomplete.
-- **topic/\*.symlink**: Any files ending in `*.symlink` get symlinked into
-  your `$HOME`. This is so you can keep all of those versioned in your dotfiles
-  but still keep those autoloaded files in your home directory. These get
-  symlinked in when you run `script/bootstrap`.
-
-## bugs
-
-I want this to work for everyone; that means when you clone it down it should
-work for you even though you may not have `rbenv` installed, for example. That
-said, I do use this as *my* dotfiles, so there's a good chance I may break
-something if I forget to make a check for a dependency.
-
-If you're brand-new to the project and run into any blockers, please
-[open an issue](https://github.com/holman/dotfiles/issues) on this repository
-and I'd love to get it fixed for you!
-
-## thanks
-
-I forked [Ryan Bates](http://github.com/ryanb)' excellent
-[dotfiles](http://github.com/ryanb/dotfiles) for a couple years before the
-weight of my changes and tweaks inspired me to finally roll my own. But Ryan's
-dotfiles were an easy way to get into bash customization, and then to jump ship
-to zsh a bit later. A decent amount of the code in these dotfiles stem or are
-inspired from Ryan's original project.
+## License
+MIT. Fork, modify, and enjoy.
