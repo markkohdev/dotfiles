@@ -13,3 +13,5 @@ alias development='git checkout development'
 alias please='sudo'
 
 alias reload='source ~/.${SHELL##*/}rc'
+
+alias ssh-reauth='export SSH_AUTH_SOCK=$(ls -t /tmp/ssh-**/* | head -1)'
