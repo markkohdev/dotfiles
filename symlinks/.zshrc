@@ -62,7 +62,11 @@ debug_msg "end - zsh configs"
 # Antigen configs
 ###############################################################################
 debug_msg "start - antigen configs"
-source $(brew --prefix)/share/antigen/antigen.zsh
+if command -v brew >/dev/null 2>&1 && [ -e "$(brew --prefix)/share/antigen/antigen.zsh" ]; then
+    source $(brew --prefix)/share/antigen/antigen.zsh
+elif [ -e "/usr/share/zsh-antigen/antigen.zsh" ]; then
+    source "/usr/share/zsh-antigen/antigen.zsh"
+fi
 
 antigen use oh-my-zsh
 antigen bundle git

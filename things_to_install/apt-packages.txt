@@ -1,0 +1,4 @@
+# Packages to install with apt
+zsh
+zsh-antigen
+fzf

@@ -61,22 +61,16 @@ alias docker-bash='docker run -ti --entrypoint /bin/bash'
 export PATH=$HOME/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=$HOME/dotfiles/bin:$PATH
-
-
-
-# Not needed anymore?
-# export PATH=/usr/local/opt/openssl@1.1/bin:$PATH
+export PATH=/usr/local/bin:$PATH
 
 ###############################################################################
 # Homebrew modifications
 ###############################################################################
-# Add homebrew to the path
-export PATH=/usr/local/bin:$PATH
-export PATH=/opt/homebrew/bin:$PATH
-eval "$(brew shellenv)"
-
-# I can't remember why this was specifically needed, but it used to point to /usr/local/bin/brew?  Pointing it to just brew until I update my work laptop
-alias brew-rosetta=$(which brew)
+if [ ! -z $(which brew) ]; then
+    # Add homebrew to the path
+    export PATH=/opt/homebrew/bin:$PATH
+    eval "$(brew shellenv)"
+fi
 
 ###############################################################################
 # Pyenv Setup
