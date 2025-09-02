@@ -1,6 +1,8 @@
 # Mark's Dotfiles 🛠️
 Welcome! This is my highly opinionated collection of dotfiles and setup scripts for making a fresh Mac or Linux system feel like home. I keep this repo public because friends and coworkers sometimes ask about my setup, and you're welcome to borrow ideas or use anything you find helpful. 😊
 
+This setup was originally forked from [holman's dotfiles](https://github.com/holman/dotfiles) but at this point has very few remaining bits from that repo so I've started fresh.  That said, I appreciate all that Holman has inspired me in terms of striving for a seamless dev environment setup and install <3
+
 The main things this sets up are:
 - [Brew](https://brew.sh/) packages (for Mac)
 - [Apt](https://apt-get.org/) packages (for Linux)
