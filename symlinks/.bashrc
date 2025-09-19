@@ -167,6 +167,5 @@ case ${TERM} in
 esac
 
 
-export PATH=/opt/spotify-devex/bin:$PATH
 
 . "$HOME/.local/bin/env"

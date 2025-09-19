@@ -202,6 +202,16 @@ export CLOUDSDK_PYTHON=$(which python3)
 
 debug_msg "end - gcloud"
 
+###############################################################################
+# LM Studio CLI
+###############################################################################
+if [ -d "$HOME/.lmstudio/bin" ]; then
+    debug_msg "start - lmstudio"
+    export PATH="$PATH:$HOME/.lmstudio/bin"
+    debug_msg "end - lmstudio"
+fi
+
+
 #######
 # End rc_common
 #######
