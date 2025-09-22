@@ -138,5 +138,3 @@ debug_msg "start - basic shell configs"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 debug_msg "end - basic shell configs"
-
-export PATH=/opt/spotify-devex/bin:$PATH

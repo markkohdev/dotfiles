@@ -165,7 +165,3 @@ case ${TERM} in
             PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
             ;;
 esac
-
-
-
-. "$HOME/.local/bin/env"
