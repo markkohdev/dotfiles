@@ -45,6 +45,7 @@ This repo is organized into folders, each with a specific purpose:
 - **`symlinks/`**: Symlinks dotfiles (like `.vimrc`, `.zshrc`, etc) into your home directory. If a file exists, you can choose to overwrite, backup, or skip.
 - **`sublime/`**: Settings for Sublime Text.
 - **`iterm/`**: iTerm2 profiles and settings for Mac.
+- **`rectangle/`**: Configuration for the [Rectangle app](https://rectangleapp.com/) (must be manually imported)
 
 ## Customization
 Add your own scripts or configs by dropping them in the appropriate folder. To add a new module, create a new folder with an `install.sh`—it will be picked up automatically.
