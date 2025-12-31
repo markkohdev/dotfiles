@@ -243,14 +243,6 @@
     }
   },
   "shortcuts" : {
-    "center" : {
-      "keyCode" : 8,
-      "modifierFlags" : 1572864
-    },
-    "larger" : {
-      "keyCode" : 124,
-      "modifierFlags" : 917504
-    },
     "leftHalf" : {
       "keyCode" : 123,
       "modifierFlags" : 1572864
@@ -258,10 +250,6 @@
     "maximize" : {
       "keyCode" : 126,
       "modifierFlags" : 1572864
-    },
-    "maximizeHeight" : {
-      "keyCode" : 126,
-      "modifierFlags" : 917504
     },
     "nextDisplay" : {
       "keyCode" : 124,
@@ -282,10 +270,6 @@
     "rightHalf" : {
       "keyCode" : 124,
       "modifierFlags" : 1572864
-    },
-    "smaller" : {
-      "keyCode" : 123,
-      "modifierFlags" : 917504
     },
     "toggleTodo" : {
       "keyCode" : 11,
