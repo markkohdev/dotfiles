@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 # Download a song from youtube!
 # Usage:
-#   download-song "<YOUTUBE_LINK>" <DESIRED_NAME>
+#   download-song YOUTUBE_URL [FILE_NAME] [EXTRA_ARGS]
+#
+# Filename will default to the youtube video title if not provided (handled automatically by yt-dlp)
 
-YOUTUBE=$1
-NAME="${2:-${PWD##*/}}"
+YOUTUBE_URL=$1
+FILE_NAME=$2
+EXTRA_ARGS="${@:3}"  # All arguments from $3 onwards
 
-if [ -z $YOUTUBE ]; then
-    echo "Usage: download-song \"https://www.youtube.com/watch?v=qWl91MnaIpM\" song_name"
+if [ -z "$YOUTUBE_URL" ]; then
+    echo "Usage: download-song YOUTUBE_URL [FILE_NAME] [EXTRA_ARGS]"
+    echo "Example: download-song \"https://www.youtube.com/watch?v=qWl91MnaIpM\" \"song_name\""
     exit 1
 fi
 
-CMD="youtube-dl -x --audio-format mp3 \"$YOUTUBE\" -o \"$NAME.mp4\""
-echo "Executing:" $CMD
+# Build the command with optional filename
+if [ -n "$FILE_NAME" ]; then
+    CMD="yt-dlp -x --audio-format mp3 --audio-quality 0 \"$YOUTUBE_URL\" -o \"$FILE_NAME.%(ext)s\" $EXTRA_ARGS"
+else
+    CMD="yt-dlp -x --audio-format mp3 --audio-quality 0 \"$YOUTUBE_URL\" $EXTRA_ARGS"
+fi
+
+echo "Executing: $CMD"
 eval $CMD
