@@ -1,0 +1,12 @@
+customCommands:
+  - key: "<c-u>"
+    command: "git push --set-upstream {{.Form.Remote}}"
+    description: "Select a remote for this branch and push"
+    context: global
+    prompts:
+    - type: 'input'
+      title: 'Remote:'
+      key: 'Remote'
+      initialValue: "{{.SelectedRemote.Name}}"
+      suggestions:
+        preset: "remotes"
