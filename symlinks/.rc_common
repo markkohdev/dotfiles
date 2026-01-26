@@ -188,7 +188,7 @@ debug_msg "end - autojump"
 # GCloud SDK
 ###############################################################################
 debug_msg "start - gcloud"
-GCLOUD_INSTALLATION="$HOME/google-cloud-sdk"
+GCLOUD_INSTALLATION="$(brew --prefix)/share/google-cloud-sdk"
 if [ "$SHELL" == "/bin/bash" ]; then
   if [ -f "$GCLOUD_INSTALLATION/path.bash.inc" ]; then . "$GCLOUD_INSTALLATION/path.bash.inc"; fi
   if [ -f "$GCLOUD_INSTALLATION/completion.bash.inc" ]; then . "$GCLOUD_INSTALLATION/completion.bash.inc"; fi
@@ -198,7 +198,8 @@ elif [ "$SHELL" == "/bin/zsh" ]; then
 fi
 
 # Set the gcloud command python
-export CLOUDSDK_PYTHON=$(which python3)
+# Uncomment this if you want to use the system python
+# export CLOUDSDK_PYTHON=$(which python3)
 
 debug_msg "end - gcloud"
 
