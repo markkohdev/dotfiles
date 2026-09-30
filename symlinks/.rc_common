@@ -86,23 +86,39 @@ debug_msg "end - homebrew modifications"
 debug_msg "start - uv setup"
 
 if command -v uv >/dev/null 2>&1; then
-    # uv shell completion
-    if [ "$SHELL" == "/bin/bash" ]; then
-        eval "$(uv generate-shell-completion bash)"
-    elif [ "$SHELL" == "/bin/zsh" ]; then
-        autoload -U +X compinit && compinit
-        eval "$(uv generate-shell-completion zsh)"
-    fi
+    # Homebrew is prepended above. Put uv's bin directory ahead of it again so
+    # python, python3, and uv tool shims stay on the uv-managed copies.
+    export PATH="$HOME/.local/bin:$PATH"
 
-    # Check if we have a global venv
-    if [ -d ~/.venv ]; then
-        # Default to the .venv in the current directory or the global .venv
-        alias work='[ -d .venv ] && source .venv/bin/activate || source ~/.venv/bin/activate'
-
-        # Add the global venv to the path
-        export PATH="$HOME/.venv/bin:$PATH"
+    # Cache completion instead of forking uv and calling compinit on every startup.
+    # Antigen (zsh) already runs compinit after this file is sourced.
+    if [ -n "$ZSH_VERSION" ]; then
+        mkdir -p "$HOME/.zfunc"
+        if [ ! -f "$HOME/.zfunc/_uv" ]; then
+            uv generate-shell-completion zsh > "$HOME/.zfunc/_uv"
+        fi
+        fpath=("$HOME/.zfunc" $fpath)
+    elif [ -n "$BASH_VERSION" ]; then
+        if [ ! -f "$HOME/.uv-completion.bash" ]; then
+            uv generate-shell-completion bash > "$HOME/.uv-completion.bash"
+        fi
+        . "$HOME/.uv-completion.bash"
     fi
 fi
+
+# Activate the nearest project .venv. Skip $HOME so a leftover global env cannot attach.
+work() {
+    local dir="$PWD"
+    while [ -n "$dir" ] && [ "$dir" != "/" ]; do
+        if [ "$dir" != "$HOME" ] && [ -f "$dir/.venv/bin/activate" ]; then
+            . "$dir/.venv/bin/activate"
+            return 0
+        fi
+        dir=$(dirname "$dir")
+    done
+    echo "No project .venv found from $PWD upward." >&2
+    return 1
+}
 
 debug_msg "end - uv setup"
 
