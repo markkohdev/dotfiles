@@ -7,7 +7,7 @@ The main things this sets up are:
 - [Brew](https://brew.sh/) packages (for Mac)
 - [Apt](https://apt-get.org/) packages (for Linux)
 - [Oh-my-zsh](https://ohmyz.sh/) (for a better shell experience)
-- Python and [uv](https://github.com/astral-sh/uv) (with a global virtual environment)
+- Python and [uv](https://github.com/astral-sh/uv) (global Python 3.12 pin, plus CLI tools via `uv tool install`)
 - Symlinks which set up zsh and bash in the way that I like them :)
 
 ## 🚀 Quickstart
@@ -41,7 +41,7 @@ This repo is organized into folders, each with a specific purpose:
 - **`brew/`**: Homebrew packages for Mac. Edit `Brewfile` to customize. 🍺
 - **`apt/`**: Apt packages for Linux. Edit `apt-packages.txt` as needed. 📦
 - **`fonts/`**: Installs fonts for your terminal (e.g., Powerline support). 🖋️
-- **`python/`**: Sets up a global Python virtual environment using [uv](https://github.com/astral-sh/uv), and installs tools from `requirements.txt`. 🐍
+- **`python/`**: Installs [uv](https://github.com/astral-sh/uv), pins Python 3.12, and installs CLI tools from `tools.txt` with `uv tool install`. 🐍
 - **`symlinks/`**: Symlinks dotfiles (like `.vimrc`, `.zshrc`, etc) into your home directory. If a file exists, you can choose to overwrite, backup, or skip.
 - **`sublime/`**: Settings for Sublime Text.
 - **`iterm/`**: iTerm2 profiles and settings for Mac.

@@ -1,0 +1,5 @@
+# Global CLI tools, installed with `uv tool install` (one package per line).
+# Libraries such as ipdb belong in a project's dev dependencies, not here.
+tldr
+ipython
+yt-dlp
