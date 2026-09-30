@@ -5,3 +5,5 @@
 .idea
 *.pyc
 .java-version
+
+**/.claude/settings.local.json
