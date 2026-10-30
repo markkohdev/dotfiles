@@ -41,7 +41,7 @@ This repo is organized into folders, each with a specific purpose:
 - **`brew/`**: Homebrew packages for Mac. Edit `Brewfile` to customize. 🍺
 - **`apt/`**: Apt packages for Linux. Edit `apt-packages.txt` as needed. 📦
 - **`fonts/`**: Installs fonts for your terminal (e.g., Powerline support). 🖋️
-- **`python/`**: Installs [uv](https://github.com/astral-sh/uv), pins Python 3.12, and installs CLI tools from `tools.txt` with `uv tool install`. 🐍
+- **`python/`**: Installs [uv](https://github.com/astral-sh/uv), pins Python 3.12, and installs CLI tools from `tools.txt` with `uv tool install`. See [Installing global Python tools](#installing-global-python-tools). 🐍
 - **`symlinks/`**: Symlinks dotfiles (like `.vimrc`, `.zshrc`, etc) into your home directory. If a file exists, you can choose to overwrite, backup, or skip.
 - **`sublime/`**: Settings for Sublime Text.
 - **`iterm/`**: iTerm2 profiles and settings for Mac.
@@ -49,6 +49,47 @@ This repo is organized into folders, each with a specific purpose:
 
 ## Customization
 Add your own scripts or configs by dropping them in the appropriate folder. To add a new module, create a new folder with an `install.sh`—it will be picked up automatically.
+
+## Installing global Python tools
+[uv](https://github.com/astral-sh/uv) owns Python and command-line tools. Bootstrap installs uv, pins Python 3.12 with `uv python pin --global`, and runs `uv tool install` once per line in [`python/tools.txt`](python/tools.txt).
+
+Shell startup puts `~/.local/bin` ahead of Homebrew, so `python`, `python3`, and the tool shims are the uv-managed copies.
+
+Install a CLI tool you want available everywhere:
+
+```sh
+uv tool install tldr
+```
+
+Then add the package name to `python/tools.txt` (one per line) so the next bootstrap installs it too. Blank lines and `#` comments in that file are skipped.
+
+```sh
+uv tool list
+uv tool upgrade tldr      # or: uv tool upgrade --all
+uv tool uninstall tldr
+```
+
+Libraries stay in the project, not in `tools.txt`:
+
+```sh
+uv add --dev ipdb
+```
+
+A standalone script that imports libraries is the other case. `uv tool install` only keeps packages that provide an executable. A dependency that is only imported is installed and then removed (`No executables are provided`). Declare those dependencies on the script so uv builds an environment for that script only:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "requests",
+# ]
+# ///
+```
+
+The first run installs those packages into a cached environment for the script. Later runs reuse it. Do not install them into a `~/.venv`: uv would discover that environment from every directory under your home folder.
+
+There is no global virtualenv. `work` activates the nearest project `.venv` and skips `$HOME`. If a leftover `~/.venv` exists, bootstrap offers to rename it so uv stops discovering it from every directory under your home folder.
 
 ## Notable Scripts in `bin/`
 - `banana`, `pizza`: Fun little scripts. Not essential, but entertaining. 🍌🍕

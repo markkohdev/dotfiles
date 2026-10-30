@@ -35,6 +35,8 @@ uv python pin --global "$PYTHON_VERSION"
 success "Python $PYTHON_VERSION pinned globally."
 
 # uv tool install accepts one package per invocation.
+# Day-to-day: `uv tool install <pkg>`, then add the name to tools.txt.
+# Libraries belong in a project (`uv add --dev`), not in this list.
 if [ -f "$DOTFILES_ROOT/python/tools.txt" ]; then
   info "Installing uv tools..."
   while IFS= read -r package || [ -n "$package" ]; do

@@ -188,10 +188,49 @@ currdir() {
 ###############################################################################
 # Generic Programming Configs
 ###############################################################################
-# Node version mananger
+# Node version manager.
+# `nvm.sh` with no args calls `nvm use` (nvm_auto). That was ~3s, and ~/.zshrc
+# was sourcing it a second time. --no-use loads the function only.
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  . "$NVM_DIR/nvm.sh" --no-use
+fi
+if [ -n "$BASH_VERSION" ] && [ -s "$NVM_DIR/bash_completion" ]; then
+  . "$NVM_DIR/bash_completion"
+fi
+
+# `default` is the `node` alias (latest installed). Put that bin on PATH so
+# `node` works without the slow `nvm use` on every startup.
+_nvm_default_version=
+if [ -s "$NVM_DIR/alias/default" ]; then
+  _nvm_default_version=$(cat "$NVM_DIR/alias/default")
+fi
+_nvm_bin=
+case "$_nvm_default_version" in
+  node|stable|default|"")
+    for _d in "$NVM_DIR"/versions/node/v*; do
+      if [ -x "$_d/bin/node" ]; then
+        _nvm_bin="$_d/bin"
+      fi
+    done
+    ;;
+  v*)
+    if [ -x "$NVM_DIR/versions/node/$_nvm_default_version/bin/node" ]; then
+      _nvm_bin="$NVM_DIR/versions/node/$_nvm_default_version/bin"
+    fi
+    ;;
+  *)
+    if [ -x "$NVM_DIR/versions/node/v$_nvm_default_version/bin/node" ]; then
+      _nvm_bin="$NVM_DIR/versions/node/v$_nvm_default_version/bin"
+    fi
+    ;;
+esac
+if [ -n "$_nvm_bin" ]; then
+  # Later startup steps prepend other bins. ~/.zshrc puts NVM_BIN first again.
+  export NVM_BIN="$_nvm_bin"
+  export PATH="$NVM_BIN:$PATH"
+fi
+unset _nvm_default_version _nvm_bin _d
 
 # Run .pythonrc on python shell start
 export PYTHONSTARTUP=${HOME}/.pythonrc

@@ -1,5 +1,14 @@
-# Global CLI tools, installed with `uv tool install` (one package per line).
-# Libraries such as ipdb belong in a project's dev dependencies, not here.
+# Global CLI tools, one package per line. Bootstrap runs `uv tool install` on each.
+#
+# Install one now, then add the name here so a new machine gets it too:
+#   uv tool install <package>
+#
+# Libraries belong in the project, not here:
+#   uv add --dev <package>
+# A standalone script that imports a library (no console script) should declare
+# those dependencies in a PEP 723 header and use `uv run --script`. See the README.
+#
+# uv tool list / upgrade / uninstall manage what is already installed.
 tldr
 ipython
 yt-dlp

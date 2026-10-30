@@ -113,7 +113,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # If there are repos that shouldn't be git colored (i.e: large repos)
 # then add them here
-DONT_GIT_COLOR=("/Users/markkoh/spotify/android_client")
+DONT_GIT_COLOR=()
 
 # Get the appropriate color for the git branch
 function git_color {
