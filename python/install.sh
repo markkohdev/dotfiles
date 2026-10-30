@@ -15,23 +15,54 @@ case "$response" in
     ;;
 esac
 
+# Nothing else in bootstrap depends on python/uv being set up (fonts, lazygit,
+# and symlinks installers are all independent of this one), so a failure here
+# shouldn't have to abort the whole run. On failure, let the user choose to
+# skip the rest of python/uv setup and continue bootstrap, or abort entirely.
+prompt_continue_or_abort() {
+  local description="$1"
+  echo ''
+  info "$description"
+  read -r -p "Continue with the rest of bootstrap? ([y]/n): " response
+  case "$response" in
+    [nN]|[nN][oO])
+      fail "Aborting bootstrap."
+      ;;
+    *)
+      info "Continuing bootstrap without a complete python/uv setup."
+      ;;
+  esac
+}
+
 # Install uv, or update an existing install to the current release.
 if ! command -v uv >/dev/null 2>&1; then
   info "uv installation not found.  Installing now..."
-  curl -LsSf https://astral.sh/uv/install.sh | sh
+  if ! curl -LsSf https://astral.sh/uv/install.sh | sh; then
+    prompt_continue_or_abort "uv installation failed."
+    return
+  fi
   export PATH="$HOME/.local/bin:$PATH"
   success "uv installed!"
 else
   info "Updating uv..."
-  uv self update
+  if ! uv self update; then
+    prompt_continue_or_abort "uv self update failed."
+    return
+  fi
   success "uv is up to date."
 fi
 
 PYTHON_VERSION="3.12"
 
 info "Installing Python $PYTHON_VERSION and default python/python3 shims..."
-uv python install "$PYTHON_VERSION" --default --preview-features python-install-default
-uv python pin --global "$PYTHON_VERSION"
+if ! uv python install "$PYTHON_VERSION" --default --preview-features python-install-default; then
+  prompt_continue_or_abort "uv python install $PYTHON_VERSION failed."
+  return
+fi
+if ! uv python pin --global "$PYTHON_VERSION"; then
+  prompt_continue_or_abort "uv python pin --global $PYTHON_VERSION failed."
+  return
+fi
 success "Python $PYTHON_VERSION pinned globally."
 
 # uv tool install accepts one package per invocation.
@@ -47,7 +78,11 @@ if [ -f "$DOTFILES_ROOT/python/tools.txt" ]; then
     package="${package%"${package##*[![:space:]]}"}"
     [ -z "$package" ] && continue
     info "Installing $package..."
-    uv tool install "$package"
+    if ! uv tool install "$package"; then
+      # A single bad package shouldn't block the rest of tools.txt or
+      # trigger the continue/abort prompt used for the setup steps above.
+      printf "\r\033[2K  [\033[0;31mFAIL\033[0m] Failed to install %s. Skipping.\n" "$package"
+    fi
   done < "$DOTFILES_ROOT/python/tools.txt"
   success "uv tools installed."
 else
