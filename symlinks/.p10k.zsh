@@ -36,7 +36,7 @@
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     context                 # user and host information
     dir                     # current directory
-    vcs                     # git status
+    git_branch              # current git branch from .git/HEAD
     # =========================[ Line #2 ]=========================
     newline                 # \n
     # prompt_char           # prompt symbol
@@ -352,6 +352,8 @@
   # typeset -g POWERLEVEL9K_DIR_PREFIX='in '
 
   #####################################[ vcs: git status ]######################################
+  # Unused. git_branch reads .git/HEAD directly because gitstatusd's libgit2 rejects
+  # Git's sparse-index extension. These settings are kept so the vcs segment can be restored.
   # Version control system colors.
   typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=2
   typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=3
@@ -495,6 +497,63 @@
   # using them. If you do, your prompt may become slow even when your current directory
   # isn't in an svn or hg reposotiry.
   typeset -g POWERLEVEL9K_VCS_BACKENDS=(git)
+
+  ###############################[ git_branch: current branch ]################################
+  # Black text on green, matching POWERLEVEL9K_VCS_CLEAN_BACKGROUND. No branch icon.
+  typeset -g POWERLEVEL9K_GIT_BRANCH_FOREGROUND=0
+  typeset -g POWERLEVEL9K_GIT_BRANCH_BACKGROUND=2
+  typeset -g POWERLEVEL9K_GIT_BRANCH_VISUAL_IDENTIFIER_EXPANSION=
+
+  # Current branch only. Does not run git, gitstatusd, or git status, and does not read the index.
+  function prompt_git_branch() {
+    emulate -L zsh -o extended_glob
+
+    local dir=$PWD gitdir='' line='' head='' label=''
+
+    while true; do
+      if [[ -d $dir/.git || -f $dir/.git || -h $dir/.git ]]; then
+        # Same repository skip as POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN='~'.
+        if [[ -n $HOME && ( $dir == $HOME || $dir -ef $HOME ) ]]; then
+          return
+        fi
+        if [[ -d $dir/.git ]]; then
+          gitdir=$dir/.git
+        elif [[ -f $dir/.git && -r $dir/.git ]]; then
+          IFS= read -r line < "$dir/.git" || [[ -n $line ]] || return
+          line=${line%$'\r'}
+          [[ $line == 'gitdir: '?* ]] || return
+          gitdir=${line#'gitdir: '}
+          [[ $gitdir == /* ]] || gitdir=$dir/$gitdir
+          gitdir=${gitdir:a}
+        else
+          return
+        fi
+        break
+      fi
+      [[ $dir == / ]] && return
+      dir=${dir:h}
+    done
+
+    [[ -n $gitdir && -f $gitdir/HEAD && -r $gitdir/HEAD ]] || return
+    IFS= read -r head < "$gitdir/HEAD" || [[ -n $head ]] || return
+    head=${head%$'\r'}
+
+    if [[ $head == 'ref: refs/heads/'?* ]]; then
+      label=${head#'ref: refs/heads/'}
+      # First 12 … last 12, same truncation as my_git_formatter.
+      (( $#label > 32 )) && label[13,-13]='…'
+    elif [[ $head == [[:xdigit:]](#c8,) ]]; then
+      label="@${head[1,8]}"
+    else
+      return
+    fi
+
+    p10k segment -b 2 -f 0 -t "${label//\%/%%}"
+  }
+
+  function instant_prompt_git_branch() {
+    prompt_git_branch
+  }
 
   ##########################[ status: exit code of the last command ]###########################
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and

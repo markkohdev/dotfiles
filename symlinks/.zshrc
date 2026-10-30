@@ -3,6 +3,20 @@
 # Executed at zsh startup
 
 ###############################################################################
+# Startup profiler
+###############################################################################
+# zprof only times functions, so pair it with a wall clock.
+#   ZSH_PROFILE=1 zsh -i -c exit
+# Leave this above Powerlevel10k instant prompt so the whole file is covered.
+# zmodload does not read from the terminal, so instant prompt can stay next.
+if [[ -n ${ZSH_PROFILE:-} ]]; then
+  zmodload zsh/zprof
+  zmodload zsh/datetime
+  typeset -F SECONDS
+  _zsh_profile_t0=$EPOCHREALTIME
+fi
+
+###############################################################################
 # Debugging utils
 ###############################################################################
 STARTUP_DEBUG=false
@@ -138,3 +152,13 @@ debug_msg "start - basic shell configs"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 debug_msg "end - basic shell configs"
+
+# rc_common records the nvm default bin. Re-apply it after later PATH prepends.
+if [ -n "${NVM_BIN:-}" ]; then
+  export PATH="$NVM_BIN:$PATH"
+fi
+
+if [[ -n ${ZSH_PROFILE:-} ]]; then
+  zprof
+  print -r -- "zsh_startup_seconds: $((EPOCHREALTIME - _zsh_profile_t0))"
+fi
