@@ -206,25 +206,27 @@ if [ -s "$NVM_DIR/alias/default" ]; then
   _nvm_default_version=$(cat "$NVM_DIR/alias/default")
 fi
 _nvm_bin=
-case "$_nvm_default_version" in
-  node|stable|default|"")
-    for _d in "$NVM_DIR"/versions/node/v*; do
-      if [ -x "$_d/bin/node" ]; then
-        _nvm_bin="$_d/bin"
+if [ -d "$NVM_DIR/versions/node" ] && [ -n "$NVM_DIR" ]; then
+  case "$_nvm_default_version" in
+    node|stable|default|"")
+      for _d in "$NVM_DIR"/versions/node/v*; do
+        if [ -x "$_d/bin/node" ]; then
+          _nvm_bin="$_d/bin"
+        fi
+      done
+      ;;
+    v*)
+      if [ -x "$NVM_DIR/versions/node/$_nvm_default_version/bin/node" ]; then
+        _nvm_bin="$NVM_DIR/versions/node/$_nvm_default_version/bin"
       fi
-    done
-    ;;
-  v*)
-    if [ -x "$NVM_DIR/versions/node/$_nvm_default_version/bin/node" ]; then
-      _nvm_bin="$NVM_DIR/versions/node/$_nvm_default_version/bin"
-    fi
-    ;;
-  *)
-    if [ -x "$NVM_DIR/versions/node/v$_nvm_default_version/bin/node" ]; then
-      _nvm_bin="$NVM_DIR/versions/node/v$_nvm_default_version/bin"
-    fi
-    ;;
-esac
+      ;;
+    *)
+      if [ -x "$NVM_DIR/versions/node/v$_nvm_default_version/bin/node" ]; then
+        _nvm_bin="$NVM_DIR/versions/node/v$_nvm_default_version/bin"
+      fi
+      ;;
+  esac
+fi
 if [ -n "$_nvm_bin" ]; then
   # Later startup steps prepend other bins. ~/.zshrc puts NVM_BIN first again.
   export NVM_BIN="$_nvm_bin"
